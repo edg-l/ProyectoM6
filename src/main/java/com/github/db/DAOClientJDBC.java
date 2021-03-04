@@ -34,4 +34,14 @@ public class DAOClientJDBC implements DAOClient {
     public void update(Client object) {
 
     }
+
+    @Override
+    public Client getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public Client getByCountry(String country) {
+        return null;
+    }
 }
