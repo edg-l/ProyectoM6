@@ -26,8 +26,23 @@ public interface DAO<T, S> {
      * @throws NotFoundException Si el objecto no existe.
      */
     T getByID(S id) throws NotFoundException;
+
+    /**
+     * Devuelve todos los clientes.
+     * @return Una coleccion con todos los clientes.
+     */
     Collection<T> getAll();
+
+    /**
+     * Borra un objeto.
+     * @param id La id del objeto
+     */
     void delete(S id);
+
+    /**
+     * Borra todos los objectos en la lista.
+     * @param objects La lista de objectos a borrar
+     */
     void deleteAll(Iterable<T> objects);
     void update(T object);
 }

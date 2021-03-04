@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Representa un cliente
+ * @author Edgar Luque
+ */
 public class Client {
     private int id;
     private String name;

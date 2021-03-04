@@ -4,6 +4,7 @@ import com.github.Client;
 
 import java.util.Collection;
 
+
 public class DAOClientMongo implements DAOClient {
     @Override
     public void insert(Client object) {
