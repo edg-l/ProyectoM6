@@ -22,9 +22,7 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 .idea/
-<<<<<<< HEAD
-/target/
-=======
+
 
 .metadata
 bin/
@@ -87,6 +85,5 @@ local.properties
 # Typically, this file would be tracked if it contains build/dependency configurations:
 .project
 
-target/
+/target/
 .classpath
->>>>>>> a84545940ace0754ace8fc786d702e1641e0c017
