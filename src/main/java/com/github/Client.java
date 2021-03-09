@@ -5,10 +5,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Representa un cliente
+ * Representa un cliente.
  * @author Edgar Luque
  */
-public class Client {
+public class Client implements Comparable<Client> {
     private int id;
     private String name;
     private String country;
@@ -71,5 +71,10 @@ public class Client {
 
     public void setVideogames(List<Videogame> videogames) {
         this.videogames = videogames;
+    }
+
+    @Override
+    public int compareTo(Client client) {
+        return Integer.compare(getId(), client.getId());
     }
 }

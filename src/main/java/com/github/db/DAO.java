@@ -44,5 +44,10 @@ public interface DAO<T, S> {
      * @param objects La lista de objectos a borrar
      */
     void deleteAll(Iterable<T> objects);
+
+    /**
+     * Actualiza el objecto.
+     * @param object El objeto a actualizar.
+     */
     void update(T object);
 }

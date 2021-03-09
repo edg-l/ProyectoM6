@@ -1,10 +1,23 @@
 package com.github.db;
 
 import com.github.Client;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 import java.util.Collection;
 
-public class DAOClientJDBC implements DAOClient {
+
+/**
+ * La implementacion del cliente DAO para mongo.
+ */
+public class ClientMongoDAO implements ClientDAO {
+    private MongoCollection<Document> collection;
+
+    public ClientMongoDAO(MongoDatabase database) {
+        this.collection = database.getCollection("clients");
+    }
+
     @Override
     public void insert(Client object) {
 
@@ -36,12 +49,12 @@ public class DAOClientJDBC implements DAOClient {
     }
 
     @Override
-    public Client getByName(String name) {
+    public Collection<Client> searchByName(String nameQuery) {
         return null;
     }
 
     @Override
-    public Client getByCountry(String country) {
+    public Collection<Client> getByCountry(String country) {
         return null;
     }
 }

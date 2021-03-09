@@ -8,6 +8,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/**
+ * @author Kevin Fernandez
+ */
 public class ConnectionViewController {
 
 	@FXML

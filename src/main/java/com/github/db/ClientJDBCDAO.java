@@ -2,10 +2,19 @@ package com.github.db;
 
 import com.github.Client;
 
+import java.sql.Connection;
 import java.util.Collection;
 
+/**
+ * La implementacion del cliente DAO para sql.
+ */
+public class ClientJDBCDAO implements ClientDAO {
+    private Connection connection;
 
-public class DAOClientMongo implements DAOClient {
+    public ClientJDBCDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     @Override
     public void insert(Client object) {
 
@@ -37,12 +46,12 @@ public class DAOClientMongo implements DAOClient {
     }
 
     @Override
-    public Client getByName(String name) {
+    public Collection<Client> searchByName(String nameQuery) {
         return null;
     }
 
     @Override
-    public Client getByCountry(String country) {
+    public Collection<Client> getByCountry(String country) {
         return null;
     }
 }
