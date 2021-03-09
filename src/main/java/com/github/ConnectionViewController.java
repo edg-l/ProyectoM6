@@ -15,7 +15,8 @@ public class ConnectionViewController {
 
 	@FXML
 	private Button btnLogin;
-	
+
+	@FXML
 	private void clickBtnLogin() {
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
