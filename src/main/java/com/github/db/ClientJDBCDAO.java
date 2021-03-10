@@ -21,8 +21,8 @@ public class ClientJDBCDAO implements ClientDAO {
     private static final Logger LOGGER = Logger.getLogger(ClientJDBCDAO.class);
     private final Connection connection;
 
-    public ClientJDBCDAO(Connection connection) {
-        this.connection = connection;
+    public ClientJDBCDAO(ConexioJDBC connection) {
+        this.connection = connection.getConnection();
     }
 
     private Client fromResultSet(ResultSet resultSet) throws SQLException {

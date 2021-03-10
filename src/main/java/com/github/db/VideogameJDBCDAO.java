@@ -15,8 +15,8 @@ import java.util.Collection;
 public class VideogameJDBCDAO implements VideogameDAO {
     private Connection connection;
 
-    public VideogameJDBCDAO(Connection connection) {
-        this.connection = connection;
+    public VideogameJDBCDAO(ConexioJDBC connection) {
+        this.connection = connection.getConnection();
     }
 
     @Override
