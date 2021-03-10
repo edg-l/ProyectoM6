@@ -22,6 +22,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("ConnectionView"), 339, 339);
         stage.setResizable(false);
+        stage.setTitle("Logging");
         stage.setScene(scene);
         stage.show();
     }

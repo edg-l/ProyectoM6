@@ -12,11 +12,6 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="339.0" prefWidth="339.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ConnectionViewController">
    <children>
-      <Label text="Login BD">
-         <font>
-            <Font size="25.0" />
-         </font>
-      </Label>
       <HBox prefHeight="21.0" prefWidth="369.0">
          <children>
             <RadioButton fx:id="radioSQL" mnemonicParsing="false" onMouseClicked="#clickRadioSQL" prefHeight="28.0" prefWidth="138.0" text="BBDD SQL">
@@ -33,6 +28,9 @@
                </padding>
             </RadioButton>
          </children>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
       </HBox>
       <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
@@ -68,6 +66,9 @@
                      </padding>
                   </Label>
                </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </VBox>
             <VBox prefHeight="130.0" prefWidth="197.0">
                <children>
@@ -94,6 +95,9 @@
                </children>
             </VBox>
          </children>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
       </HBox>
       <VBox alignment="CENTER" prefHeight="74.0" prefWidth="299.0">
          <children>

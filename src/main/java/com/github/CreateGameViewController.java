@@ -23,6 +23,10 @@ public class CreateGameViewController {
     }
     @FXML
     private void clickBtnBack() {
+        ClientListViewController.stageGame.close();
+        ClientListViewController.stageGame = null;
+        // SOLO CLOSE
+        /*
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
         Scene scene;
         try {
@@ -32,7 +36,7 @@ public class CreateGameViewController {
             stage.setScene(scene);
         } catch (IOException io) {
             io.printStackTrace();
-        }
+        }*/
     }
 
 }
