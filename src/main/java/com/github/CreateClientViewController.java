@@ -11,7 +11,7 @@ import java.io.IOException;
 /**
  * @author Kevin Fernandez
  */
-public class CreateGameViewController {
+public class CreateClientViewController {
 
     @FXML
     private Button btnBack;
@@ -23,9 +23,9 @@ public class CreateGameViewController {
     }
     @FXML
     private void clickBtnBack() {
-        ClientListViewController.stageGame.close();
-        ClientListViewController.stageGame = null;
-        // SOLO CLOSE
+        ClientListViewController.stageClient.close();
+        ClientListViewController.stageClient = null;
+        // SOLO CLOSE VENTANA
         /*
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
         Scene scene;
