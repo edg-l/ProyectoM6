@@ -13,12 +13,12 @@
    <children>
       <HBox prefHeight="21.0" prefWidth="369.0">
          <children>
-            <RadioButton fx:id="radioSQL" mnemonicParsing="false" text="BBDD SQL">
+            <RadioButton fx:id="radioSQL" mnemonicParsing="false" onMouseClicked="#clickRadioSQL" text="BBDD SQL">
                <padding>
                   <Insets bottom="25.0" left="15.0" right="25.0" top="25.0" />
                </padding>
             </RadioButton>
-            <RadioButton fx:id="radioNOSQL" mnemonicParsing="false" text="BBDD NO-SQL">
+            <RadioButton fx:id="radioNOSQL" mnemonicParsing="false" onMouseClicked="#clickRadioNoSQL" text="BBDD NO-SQL">
                <padding>
                   <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                </padding>
@@ -62,22 +62,22 @@
             </VBox>
             <VBox prefHeight="130.0" prefWidth="197.0">
                <children>
-                  <TextField alignment="TOP_CENTER">
+                  <TextField fx:id="txtHost" alignment="TOP_CENTER">
                      <VBox.margin>
                         <Insets bottom="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="txtPort">
                      <VBox.margin>
                         <Insets bottom="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="txtUser">
                      <VBox.margin>
                         <Insets bottom="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <TextField>
+                  <TextField fx:id="txtPass">
                      <VBox.margin>
                         <Insets right="10.0" />
                      </VBox.margin>
