@@ -6,6 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -14,7 +17,20 @@ import javafx.stage.Stage;
 public class ConnectionViewController {
 
 	@FXML
+	private RadioButton radioSQL;
+	@FXML
+	private RadioButton radioNoSQL;
+	@FXML
+	private TextField txtHost;
+	@FXML
+	private TextField txtPort;
+	@FXML
+	private TextField txtUser;
+	@FXML
+	private TextField txtPass;
+	@FXML
 	private Button btnLogin;
+
 	@FXML
 	private void clickRadioSQL() {
 
@@ -29,10 +45,10 @@ public class ConnectionViewController {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
 		Scene scene;
 		try {
-			scene = new Scene(fxmlLoader.load(), 600, 300);
-			Stage stage = new Stage();
+			scene = new Scene(fxmlLoader.load(), 535, 656);
+			Stage stage = (Stage) btnLogin.getScene().getWindow();
+			stage.setResizable(false);
 			stage.setScene(scene);
-			stage.show();
 		} catch (IOException io) {
 			io.printStackTrace();
 		}
