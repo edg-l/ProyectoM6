@@ -1,6 +1,7 @@
 package com.github.db;
 
 import com.github.Client;
+import com.github.exceptions.DatabaseException;
 
 import java.util.Collection;
 
@@ -14,12 +15,12 @@ public interface ClientDAO extends DAO<Client, Integer> {
      * @param nameQuery El nombre a buscar.
      * @return Una lista de clientes con nombres parecidos.
      */
-    Collection<Client> searchByName(String nameQuery);
+    Collection<Client> searchByName(String nameQuery) throws DatabaseException;
 
     /**
      * Buscar clientes por country.
      * @param country El country.
      * @return Una lista de clientes con este country.
      */
-    Collection<Client> getByCountry(String country);
+    Collection<Client> getByCountry(String country) throws DatabaseException;
 }

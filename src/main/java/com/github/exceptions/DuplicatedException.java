@@ -5,4 +5,7 @@ package com.github.exceptions;
  * @author Edgar Luque
  */
 public class DuplicatedException extends Exception {
+    public DuplicatedException(String message, Throwable cause) {
+        super(message, cause);
+    }
 }
