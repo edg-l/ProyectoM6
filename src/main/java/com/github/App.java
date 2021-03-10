@@ -1,10 +1,12 @@
 package com.github;
 
+import com.github.db.ClientJDBCDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -12,7 +14,7 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-
+    private static final Logger LOGGER = Logger.getLogger(App.class);
     private static Scene scene;
 
     @Override
@@ -27,11 +29,13 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
+        LOGGER.debug("Cargando fitxero fxml: " + fxml);
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
         launch();
     }
 

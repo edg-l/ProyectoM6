@@ -1,6 +1,6 @@
 package com.github;
 
-import java.util.Date;
+import java.sql.Date;
 
 /**
  * Representa un videojuego.
