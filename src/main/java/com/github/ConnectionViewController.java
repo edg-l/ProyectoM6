@@ -15,7 +15,14 @@ public class ConnectionViewController {
 
 	@FXML
 	private Button btnLogin;
+	@FXML
+	private void clickRadioSQL() {
 
+	}
+	@FXML
+	private void clickRadioNoSQL() {
+
+	}
 	@FXML
 	private void clickBtnLogin() {
 		
