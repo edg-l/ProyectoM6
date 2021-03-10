@@ -45,7 +45,7 @@ public class ConnectionViewController {
 		FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
 		Scene scene;
 		try {
-			scene = new Scene(fxmlLoader.load(), 600, 656);
+			scene = new Scene(fxmlLoader.load(), 535, 656);
 			Stage stage = (Stage) btnLogin.getScene().getWindow();
 			stage.setResizable(false);
 			stage.setScene(scene);

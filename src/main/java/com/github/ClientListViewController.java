@@ -18,22 +18,37 @@ public class ClientListViewController {
     @FXML
     private Button btnSearch;
     @FXML
-    private ImageView btnClientAdd;
+    private Button btnCreateClient;
+    @FXML
+    private Button btnCreateVideoGame;
     @FXML
     private TableView<Client> tableClient;
-    
+
     @FXML
     private void clickBtnSearch() {
 
     }
 
     @FXML
-    private void clickBtnClientAdd() {
+    private void clickBtnCreateClient() {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateClientView" + ".fxml"));
         Scene scene;
         try {
-            scene = new Scene(fxmlLoader.load(), 600, 656);
-            Stage stage = (Stage) btnClientAdd.getScene().getWindow();
+            scene = new Scene(fxmlLoader.load(), 414, 305);
+            Stage stage = (Stage) btnCreateClient.getScene().getWindow();
+            stage.setResizable(false);
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+    }
+    @FXML
+    private void clickBtnCreateVideoGame() {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateGameView" + ".fxml"));
+        Scene scene;
+        try {
+            scene = new Scene(fxmlLoader.load(), 414, 305);
+            Stage stage = (Stage) btnCreateClient.getScene().getWindow();
             stage.setResizable(false);
             stage.setScene(scene);
         } catch (IOException io) {
