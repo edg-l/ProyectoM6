@@ -46,6 +46,11 @@ public class ConnectionViewController {
         radioSQL.setToggleGroup(group);
         radioNoSQL.setToggleGroup(group);
 
+        txtHost.setText("Host");
+        txtPort.setText("Port");
+        txtUser.setText("User");
+        txtPass.setText("Password");
+
         //group.selectedToggleProperty().addListener((observable, oldVal, newVal) -> txtHost.setText(newVal.toString() + " was selected"));
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
@@ -55,52 +60,43 @@ public class ConnectionViewController {
                 selectedBBDD = chk.getText();
             }
         });
-
-        txtHost.setText("Host");
-        txtPort.setText("Port");
-        txtUser.setText("User");
-        txtPass.setText("Password");
-
+        
         btnLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
             public void handle(MouseEvent arg0) {
-                if (selectedBBDD == null) {
 
-                } else {
-                    switch (selectedBBDD) {
-                        case "BBDD SQL":
-                            try {
-                                labelError.setTextFill(Color.GREEN);
-                                labelError.setText("Connecting...");
-                                ConexioJDBC.connect();
-                                clientListWindow();
-                            } catch (DatabaseException e) {
-                                labelError.setTextFill(Color.RED);
-                                labelError.setText("Error: Cannot connect to BBDD");
-                            }
-
-                            break;
-                        case "BBDD NO-SQL":
-
-                            try {
-                                labelError.setTextFill(Color.GREEN);
-                                labelError.setText("Connecting...");
-                                ConexioMongo.connect();
-                                clientListWindow();
-                            } catch (DatabaseException e) {
-                                labelError.setTextFill(Color.RED);
-                                labelError.setText("Error: Cannot connect to BBDD");
-                            }
-
-                            break;
-                        case "":
+                switch (selectedBBDD) {
+                    case "BBDD SQL":
+                        try {
+                            labelError.setTextFill(Color.GREEN);
+                            labelError.setText("Connecting...");
+                            ConexioJDBC.connect();
+                            clientListWindow();
+                        } catch (DatabaseException e) {
                             labelError.setTextFill(Color.RED);
-                            labelError.setText("Error: No BBDD type SELECTED");
-                    }
+                            labelError.setText("Error: Cannot connect to BBDD");
+                        }
+
+                        break;
+                    case "BBDD NO-SQL":
+
+                        try {
+                            labelError.setTextFill(Color.GREEN);
+                            labelError.setText("Connecting...");
+                            ConexioMongo.connect();
+                            clientListWindow();
+                        } catch (DatabaseException e) {
+                            labelError.setTextFill(Color.RED);
+                            labelError.setText("Error: Cannot connect to BBDD");
+                        }
+
+                        break;
+                    case "":
+                        labelError.setTextFill(Color.RED);
+                        labelError.setText("Error: No BBDD type SELECTED");
                 }
             }
-
         });
     }
 
