@@ -21,12 +21,15 @@ public class ClientListViewController {
     public static Stage stageClient = null;
     public static Stage stageGame = null;
 
+    /*
     @FXML
     private Button btnSearch;
     @FXML
     private Button btnCreateClient;
     @FXML
     private Button btnCreateVideoGame;
+    */
+
     @FXML
     private TableView<Client> tableClient;
 
@@ -39,20 +42,8 @@ public class ClientListViewController {
     private void clickBtnCreateClient() {
 
         if (stageClient == null) {
-
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateClientView" + ".fxml"));
-            Scene scene;
-            try {
-                scene = new Scene(fxmlLoader.load(), 414, 305);
-                stageClient = new Stage();
-                stageClient.setResizable(false);
-                stageClient.setScene(scene);
-                stageClient.initStyle(StageStyle.UNDECORATED);
-                stageClient.show();
-
-            } catch (IOException io) {
-                io.printStackTrace();
-            }
+            throwNewCreateWindows(fxmlLoader);
         }
     }
 
@@ -60,19 +51,23 @@ public class ClientListViewController {
     private void clickBtnCreateVideoGame() {
 
         if (stageGame == null) {
-
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateGameView" + ".fxml"));
-            Scene scene;
-            try {
-                scene = new Scene(fxmlLoader.load(), 414, 305);
-                stageGame = new Stage();
-                stageGame.setResizable(false);
-                stageGame.setScene(scene);
-                stageGame.initStyle(StageStyle.UNDECORATED);
-                stageGame.show();
-            } catch (IOException io) {
-                io.printStackTrace();
-            }
+            throwNewCreateWindows(fxmlLoader);
+        }
+    }
+
+    /** ventana de creación **/
+    private void throwNewCreateWindows(FXMLLoader fxmlLoader) {
+
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 414, 305);
+            stageGame = new Stage();
+            stageGame.setResizable(false);
+            stageGame.setScene(scene);
+            stageGame.initStyle(StageStyle.UNDECORATED);
+            stageGame.show();
+        } catch (IOException io) {
+            io.printStackTrace();
         }
     }
 }

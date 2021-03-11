@@ -15,7 +15,7 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    private static final Logger LOGGER = Logger.getLogger(App.class);
+    public static final Logger LOGGER = Logger.getLogger(App.class);
     private static Scene scene;
 
     @Override
