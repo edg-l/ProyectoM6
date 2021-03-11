@@ -18,8 +18,7 @@ import java.io.IOException;
  */
 public class ClientListViewController {
 
-    public static Stage stageClient = null;
-    public static Stage stageGame = null;
+    public static Stage stageCreate = null;
 
     /*
     @FXML
@@ -41,7 +40,7 @@ public class ClientListViewController {
     @FXML
     private void clickBtnCreateClient() {
 
-        if (stageClient == null) {
+        if (stageCreate == null) {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateClientView" + ".fxml"));
             throwNewCreateWindows(fxmlLoader);
         }
@@ -50,7 +49,7 @@ public class ClientListViewController {
     @FXML
     private void clickBtnCreateVideoGame() {
 
-        if (stageGame == null) {
+        if (stageCreate == null) {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("CreateGameView" + ".fxml"));
             throwNewCreateWindows(fxmlLoader);
         }
@@ -61,11 +60,11 @@ public class ClientListViewController {
 
         try {
             Scene scene = new Scene(fxmlLoader.load(), 414, 305);
-            stageGame = new Stage();
-            stageGame.setResizable(false);
-            stageGame.setScene(scene);
-            stageGame.initStyle(StageStyle.UNDECORATED);
-            stageGame.show();
+            stageCreate = new Stage();
+            stageCreate.setResizable(false);
+            stageCreate.setScene(scene);
+            stageCreate.initStyle(StageStyle.UNDECORATED);
+            stageCreate.show();
         } catch (IOException io) {
             io.printStackTrace();
         }

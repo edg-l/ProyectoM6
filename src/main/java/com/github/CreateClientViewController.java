@@ -23,8 +23,8 @@ public class CreateClientViewController {
     }
     @FXML
     private void clickBtnBack() {
-        ClientListViewController.stageClient.close();
-        ClientListViewController.stageClient = null;
+        ClientListViewController.stageCreate.close();
+        ClientListViewController.stageCreate = null;
         // SOLO CLOSE VENTANA
         /*
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));

@@ -23,8 +23,8 @@ public class CreateGameViewController {
     }
     @FXML
     private void clickBtnBack() {
-        ClientListViewController.stageGame.close();
-        ClientListViewController.stageGame = null;
+        ClientListViewController.stageCreate.close();
+        ClientListViewController.stageCreate = null;
         // SOLO CLOSE
         /*
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));

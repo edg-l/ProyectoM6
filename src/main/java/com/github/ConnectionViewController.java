@@ -1,6 +1,7 @@
 package com.github;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import com.github.db.ConexioJDBC;
 import com.github.db.ConexioMongo;
@@ -18,6 +19,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 /**
  * @author Kevin Fernandez
@@ -52,7 +55,7 @@ public class ConnectionViewController {
         radioNoSQL.setToggleGroup(group);
 
         txtHost.setText("Host");
-        txtPort.setText("Port");
+        txtPort.setText("4321");
         txtUser.setText("User");
         txtPass.setText("Password");
 
@@ -66,6 +69,25 @@ public class ConnectionViewController {
             }
         });
 
+        txtPort.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (txtPort.getText().length() > 4) {
+                    txtPort.setText(txtPort.getText().substring(0, 4));
+                }
+                if (newValue.matches("\\d*")) {
+                    try {
+                        int value = Integer.parseInt(newValue);
+                    } catch (Exception e) {
+                        txtPort.setText("");
+                    }
+
+                } else {
+                    txtPort.setText(oldValue + "");
+                }
+            }
+        });
         btnLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
@@ -77,6 +99,7 @@ public class ConnectionViewController {
                         txtUser.getText(),
                         txtPass.getText()
                 );
+
 
                 switch (selectedBBDD) {
                     case "BBDD SQL":
