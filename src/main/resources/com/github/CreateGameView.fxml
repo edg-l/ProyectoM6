@@ -61,6 +61,14 @@
                            <padding>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Preu">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
                         </Label>
                      </children>
                      <HBox.margin>
@@ -90,9 +98,14 @@
                         </HBox>
                         <ChoiceBox fx:id="choicePlatform" prefHeight="25.0" prefWidth="255.0">
                            <VBox.margin>
-                              <Insets right="10.0" />
+                              <Insets bottom="10.0" right="10.0" />
                            </VBox.margin>
                         </ChoiceBox>
+                        <TextField fx:id="txtPreu" prefHeight="25.0" prefWidth="259.0">
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </TextField>
                         <HBox alignment="BOTTOM_CENTER" prefHeight="58.0" prefWidth="245.0">
                            <children>
                               <Button fx:id="btnAdd" mnemonicParsing="false" onMouseClicked="#clickBtnAdd" text="Afegir">
