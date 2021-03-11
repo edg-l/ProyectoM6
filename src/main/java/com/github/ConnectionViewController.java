@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import com.github.db.ConexioJDBC;
 import com.github.db.ConexioMongo;
+import com.github.db.GestorPersistenciaJDBC;
+import com.github.db.GestorPersistenciaMongo;
 import com.github.exceptions.DatabaseException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -15,12 +17,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 /**
  * @author Kevin Fernandez
  */
 
 public class ConnectionViewController {
+    private static final Logger LOGGER = Logger.getLogger(ConnectionViewController.class);
 
     @FXML
     private RadioButton radioSQL;
@@ -57,7 +61,7 @@ public class ConnectionViewController {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
                 RadioButton chk = (RadioButton) radioSQL.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-                System.out.println("Selected - " + chk.getText());
+                LOGGER.debug("Selected - " + chk.getText());
                 selectedBBDD = chk.getText();
             }
         });
@@ -67,12 +71,21 @@ public class ConnectionViewController {
             @Override
             public void handle(MouseEvent arg0) {
 
+                Configuration configuration = new Configuration(
+                        txtHost.getText(),
+                        Integer.parseInt(txtPort.getText()),
+                        txtUser.getText(),
+                        txtPass.getText()
+                );
+
                 switch (selectedBBDD) {
                     case "BBDD SQL":
                         try {
                             labelError.setTextFill(Color.GREEN);
                             labelError.setText("Connecting...");
-                            ConexioJDBC.connect();
+                            App.conexio = new ConexioJDBC(configuration);
+                            App.conexio.connect();
+                            App.gestorPersistencia = new GestorPersistenciaJDBC((ConexioJDBC) App.conexio);
                             clientListWindow();
                         } catch (DatabaseException e) {
                             labelError.setTextFill(Color.RED);
@@ -85,7 +98,9 @@ public class ConnectionViewController {
                         try {
                             labelError.setTextFill(Color.GREEN);
                             labelError.setText("Connecting...");
-                            ConexioMongo.connect();
+                            App.conexio = new ConexioMongo(configuration);
+                            App.conexio.connect();
+                            App.gestorPersistencia = new GestorPersistenciaMongo((ConexioMongo) App.conexio);
                             clientListWindow();
                         } catch (DatabaseException e) {
                             labelError.setTextFill(Color.RED);

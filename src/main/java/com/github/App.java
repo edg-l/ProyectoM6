@@ -1,6 +1,8 @@
 package com.github;
 
 import com.github.db.ClientJDBCDAO;
+import com.github.db.Conexio;
+import com.github.db.GestorPersistencia;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,8 +17,10 @@ import java.io.IOException;
  * JavaFX App
  */
 public class App extends Application {
-    public static final Logger LOGGER = Logger.getLogger(App.class);
+    private static final Logger LOGGER = Logger.getLogger(App.class);
     private static Scene scene;
+    public static Conexio conexio;
+    public static GestorPersistencia gestorPersistencia;
 
     @Override
     public void start(Stage stage) throws IOException {
