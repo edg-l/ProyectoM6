@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 /**
  * @author Kevin Fernandez
  */
+
 public class ConnectionViewController {
 
     @FXML
@@ -60,7 +61,7 @@ public class ConnectionViewController {
                 selectedBBDD = chk.getText();
             }
         });
-        
+
         btnLogin.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
             @Override
