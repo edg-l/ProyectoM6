@@ -23,7 +23,7 @@
          <children>
             <Label prefHeight="70.0" prefWidth="351.0" text="Create Video Game">
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                  <Insets left="25.0" right="25.0" top="25.0" />
                </VBox.margin>
                <font>
                   <Font size="25.0" />

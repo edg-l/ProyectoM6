@@ -35,6 +35,11 @@ public class ClientListViewController {
     @FXML
     private void clickBtnSearch() {
 
+        if (App.bbddSQL) { // SQL
+
+        } else { // MONGO DB
+
+        }
     }
 
     @FXML

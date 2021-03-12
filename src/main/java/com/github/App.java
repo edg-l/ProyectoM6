@@ -21,6 +21,7 @@ public class App extends Application {
     private static Scene scene;
     public static Conexio conexio;
     public static GestorPersistencia gestorPersistencia;
+    public static boolean bbddSQL;
 
     @Override
     public void start(Stage stage) throws IOException {
