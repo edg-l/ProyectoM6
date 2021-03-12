@@ -25,12 +25,7 @@ public class ClientListViewController {
 
     @FXML
     private void clickBtnSearch() {
-
-        if (App.bbddSQL) { // SQL
-
-        } else { // MONGO DB
-
-        }
+        // App.gestorPersistencia.getClientDAO().searchByName("nombre")
     }
 
     @FXML
