@@ -35,6 +35,7 @@ public class ConexioJDBC implements Conexio {
                     "jdbc:mysql://%s:%d/gameshop",
                     host, port
             ), usuario, password);
+            connection.setAutoCommit(false);
         } catch (SQLException exception) {
             throw new DatabaseException("error al conectarse", exception);
         }

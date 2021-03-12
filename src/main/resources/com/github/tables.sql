@@ -1,6 +1,6 @@
 create table if not exists client (
     id int,
-    name varchar(120) not null unique,
+    name varchar(120) not null,
     country varchar(120) not null,
     createdAt date not null,
     isPartner bool not null,

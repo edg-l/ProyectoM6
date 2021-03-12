@@ -50,6 +50,8 @@ public class ClientJDBCDAO implements ClientDAO {
             stmt.execute();
             connection.commit();
         } catch (SQLException throwables) {
+            LOGGER.error("Error sql: " + throwables.getErrorCode());
+            LOGGER.error("Error sql state: " + throwables.getSQLState());
             if(throwables.getErrorCode() == 1062) {
                 throw new DuplicatedException(
                         String.format("error al insertar cliente con id %s, ya existe", client.getId()),

@@ -50,7 +50,7 @@ public class ClientListViewController {
     private void throwNewCreateWindows(FXMLLoader fxmlLoader) {
 
         try {
-            Scene scene = new Scene(fxmlLoader.load(), 414, 305);
+            Scene scene = new Scene(fxmlLoader.load(), 414, 320);
             stageCreate = new Stage();
             stageCreate.setResizable(false);
             stageCreate.setScene(scene);
