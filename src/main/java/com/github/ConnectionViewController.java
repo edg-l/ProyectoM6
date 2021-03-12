@@ -54,10 +54,10 @@ public class ConnectionViewController {
         radioSQL.setToggleGroup(group);
         radioNoSQL.setToggleGroup(group);
 
-        txtHost.setText("Host");
-        txtPort.setText("4321");
-        txtUser.setText("User");
-        txtPass.setText("Password");
+        txtHost.setText("localhost");
+        txtPort.setText("3306");
+        txtUser.setText("root");
+        txtPass.setText("");
 
         //group.selectedToggleProperty().addListener((observable, oldVal, newVal) -> txtHost.setText(newVal.toString() + " was selected"));
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
@@ -111,6 +111,8 @@ public class ConnectionViewController {
                             App.gestorPersistencia = new GestorPersistenciaJDBC((ConexioJDBC) App.conexio);
                             clientListWindow();
                         } catch (DatabaseException e) {
+                            LOGGER.error(e);
+                            LOGGER.error(e.getCause());
                             labelError.setTextFill(Color.RED);
                             labelError.setText("Error: Cannot connect to BBDD");
                         }
