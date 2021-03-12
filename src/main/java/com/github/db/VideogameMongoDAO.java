@@ -12,6 +12,7 @@ import java.util.Collection;
 
 /**
  * La implementacion del videogame DAO para mongo.
+ * @author Kevin Fernandez
  */
 public class VideogameMongoDAO implements VideogameDAO {
     private MongoCollection<Document> collection;

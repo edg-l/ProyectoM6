@@ -1,6 +1,6 @@
 create table if not exists client (
-    id int AUTO_INCREMENT,
-    name varchar(120) not null,
+    id int,
+    name varchar(120) not null unique,
     country varchar(120) not null,
     createdAt date not null,
     isPartner bool not null,
@@ -8,8 +8,8 @@ create table if not exists client (
 );
 
 create table if not exists videogame (
-    id int AUTO_INCREMENT,
-    name varchar(120) not null,
+    id int,
+    name varchar(120) not null unique,
     platform int not null,
     releaseDate date not null,
     price int not null,

@@ -9,6 +9,9 @@ import java.util.List;
  * @author Edgar Luque
  */
 public class Client implements Comparable<Client> {
+    /**
+     * El dni.
+     */
     private int id;
     private String name;
     private String country;

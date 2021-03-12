@@ -10,6 +10,7 @@ import java.util.Collection;
 
 /**
  * La implementacion del cliente DAO para mongo.
+ * @author Kevin Fernandez
  */
 public class ClientMongoDAO implements ClientDAO {
     private MongoCollection<Document> collection;

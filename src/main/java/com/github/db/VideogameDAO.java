@@ -2,6 +2,7 @@ package com.github.db;
 
 import com.github.Platform;
 import com.github.Videogame;
+import com.github.exceptions.DatabaseException;
 
 import java.util.Collection;
 
@@ -15,12 +16,12 @@ public interface VideogameDAO extends DAO<Videogame, Integer> {
      * @param name El nombre.
      * @return La lista de videojuegos encontrados.
      */
-    Collection<Videogame> getByName(String name);
+    Collection<Videogame> getByName(String name) throws DatabaseException;
 
     /**
      * Busca videojuegos por su plataforma.
      * @param platform La plataforma.
      * @return La lista de videojuegos encontrados.
      */
-    Collection<Videogame> getByPlatform(Platform platform);
+    Collection<Videogame> getByPlatform(Platform platform) throws DatabaseException;
 }

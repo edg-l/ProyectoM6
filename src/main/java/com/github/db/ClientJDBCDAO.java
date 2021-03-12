@@ -16,6 +16,7 @@ import java.util.List;
 
 /**
  * La implementacion del cliente DAO para sql.
+ * @author Edgar Luque
  */
 public class ClientJDBCDAO implements ClientDAO {
     private static final Logger LOGGER = Logger.getLogger(ClientJDBCDAO.class);
@@ -39,22 +40,23 @@ public class ClientJDBCDAO implements ClientDAO {
     public void insert(Client client) throws DuplicatedException, DatabaseException {
         LOGGER.debug("Insertando cliente: " + client.getName());
         try(PreparedStatement stmt = connection.prepareStatement(
-                "insert into client (name, country, createdAt, isPartner) values (?,?,?,?)"
+                "insert into client (id, name, country, createdAt, isPartner) values (?,?,?,?,?)"
         )) {
-            stmt.setString(1, client.getName());
-            stmt.setString(2, client.getCountry());
-            stmt.setDate(3, client.getCreatedAt());
-            stmt.setBoolean(4, client.isPartner());
+            stmt.setInt(1, client.getId());
+            stmt.setString(2, client.getName());
+            stmt.setString(3, client.getCountry());
+            stmt.setDate(4, client.getCreatedAt());
+            stmt.setBoolean(5, client.isPartner());
             stmt.execute();
             connection.commit();
         } catch (SQLException throwables) {
             if(throwables.getErrorCode() == 1062) {
                 throw new DuplicatedException(
-                        String.format("error al obtener cliente con id %s, ya existe", client.getId()),
+                        String.format("error al insertar cliente con id %s, ya existe", client.getId()),
                         throwables
                 );
             } else {
-                throw new DatabaseException("error al obtener cliente con id " + client.getId(), throwables);
+                throw new DatabaseException("error al insertar cliente con id " + client.getId(), throwables);
             }
 
         }

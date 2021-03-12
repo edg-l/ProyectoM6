@@ -2,16 +2,14 @@ package com.github.db;
 
 import com.github.Configuration;
 import com.github.exceptions.DatabaseException;
-import com.mongodb.MongoClientOptions;
 import com.mongodb.MongoException;
-import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
+/**
+ * Conexion a mongodb.
+ * @author Kevin Fernandez
+ */
 public class ConexioMongo implements Conexio {
     private String host;
     private int port;
@@ -20,7 +18,6 @@ public class ConexioMongo implements Conexio {
     private MongoClient connection;
 
     public ConexioMongo(Configuration configuration) {
-
         this.host = configuration.getHost();
         this.port = configuration.getPort();
         this.usuario = configuration.getUsuario();
