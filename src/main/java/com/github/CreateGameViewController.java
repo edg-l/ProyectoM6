@@ -73,7 +73,7 @@ public class CreateGameViewController {
         int preu = Integer.parseInt(txtPreu.getText());
 
         Videogame newVideoGame = new Videogame(id,name,platform,date,preu);
-        
+
     }
 
     @FXML
