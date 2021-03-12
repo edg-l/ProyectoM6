@@ -17,10 +17,9 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="395.0" minWidth="10.0" prefWidth="393.0" />
   </columnConstraints>
   <rowConstraints>
-      <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="58.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="204.0" minHeight="10.0" prefHeight="44.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="222.0" minHeight="10.0" prefHeight="213.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="390.0" minHeight="10.0" prefHeight="328.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="86.0" minHeight="10.0" prefHeight="62.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <HBox alignment="CENTER" GridPane.rowIndex="2">
@@ -36,23 +35,86 @@
             </TableView>
          </children>
       </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+      <VBox alignment="TOP_CENTER" prefHeight="176.0" prefWidth="389.0" GridPane.rowIndex="1">
          <children>
-            <VBox alignment="CENTER_RIGHT" prefHeight="83.0" prefWidth="342.0">
+            <VBox prefHeight="25.0" prefWidth="389.0">
                <children>
-                  <ImageView fx:id="btnAddVideoGame" fitHeight="54.0" fitWidth="55.0" onMouseClicked="#clickBtnAddVideoGame" pickOnBounds="true" preserveRatio="true">
+                  <Label text="Client Info">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="30.0" top="10.0" />
+                        <Insets left="55.0" />
                      </VBox.margin>
-                     <image>
-                        <Image url="@images/mongodb.png" />
-                     </image>
-                  </ImageView>
+                  </Label>
                </children>
             </VBox>
+            <HBox alignment="CENTER" prefHeight="107.0" prefWidth="389.0">
+               <children>
+                  <VBox prefHeight="160.0" prefWidth="112.0">
+                     <children>
+                        <Label text="Nom">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="ID">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Partner">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="94.0" prefWidth="197.0">
+                     <children>
+                        <TextField fx:id="txtNom" alignment="TOP_LEFT" editable="false">
+                           <VBox.margin>
+                              <Insets bottom="10.0" right="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtID" editable="false">
+                           <VBox.margin>
+                              <Insets bottom="10.0" right="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <HBox prefHeight="22.0" prefWidth="197.0">
+                           <children>
+                              <RadioButton fx:id="radioYes" disable="true" mnemonicParsing="false" text="Si" />
+                              <RadioButton fx:id="radioNo" disable="true" mnemonicParsing="false" text="No">
+                                 <HBox.margin>
+                                    <Insets left="25.0" />
+                                 </HBox.margin>
+                              </RadioButton>
+                           </children>
+                        </HBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
          </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="159.0" prefWidth="506.0" GridPane.rowIndex="1" />
+         <padding>
+            <Insets top="35.0" />
+         </padding></VBox>
       <HBox alignment="CENTER" prefHeight="316.0" prefWidth="343.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="15.0" top="15.0" />
@@ -66,101 +128,88 @@
             </TableView>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="172.0" prefWidth="402.0" GridPane.rowIndex="1">
+      <VBox alignment="TOP_CENTER" prefHeight="181.0" prefWidth="384.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <VBox prefHeight="160.0" prefWidth="112.0">
+            <VBox prefHeight="21.0" prefWidth="384.0">
                <children>
-                  <Label text="Nom">
-                     <padding>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                     </padding>
+                  <Label text="Game Search">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="ID">
-                     <padding>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="Partner">
-                     <padding>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                     </padding>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets left="52.0" />
                      </VBox.margin>
                   </Label>
                </children>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
             </VBox>
-            <VBox prefHeight="130.0" prefWidth="197.0">
+            <HBox alignment="CENTER" prefHeight="119.0" prefWidth="384.0">
                <children>
-                  <TextField fx:id="txtNom" alignment="TOP_LEFT">
-                     <VBox.margin>
-                        <Insets bottom="10.0" right="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="txtID">
-                     <VBox.margin>
-                        <Insets bottom="10.0" right="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox prefHeight="22.0" prefWidth="197.0">
+                  <VBox prefHeight="160.0" prefWidth="112.0">
                      <children>
-                        <RadioButton fx:id="radioYes" mnemonicParsing="false" text="Si" />
-                        <RadioButton fx:id="radioNo" mnemonicParsing="false" text="No">
-                           <HBox.margin>
-                              <Insets left="25.0" />
-                           </HBox.margin>
-                        </RadioButton>
+                        <Label text="Nom">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="ID">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Plataforma">
+                           <padding>
+                              <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+                           </padding>
+                        </Label>
                      </children>
-                  </HBox>
-               </children>
-               <HBox.margin>
-                  <Insets top="15.0" />
-               </HBox.margin>
-            </VBox>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="124.0" prefWidth="89.0">
-               <children>
-                  <Button fx:id="btnAdd" mnemonicParsing="false" onMouseClicked="#clickBtnAdd" text="Afegir">
                      <HBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets top="15.0" />
                      </HBox.margin>
-                  </Button>
+                  </VBox>
+                  <VBox prefHeight="117.0" prefWidth="197.0">
+                     <children>
+                        <TextField fx:id="txtNom1" alignment="TOP_LEFT">
+                           <VBox.margin>
+                              <Insets bottom="10.0" right="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="txtID1">
+                           <VBox.margin>
+                              <Insets bottom="10.0" right="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <ChoiceBox prefHeight="25.0" prefWidth="194.0">
+                           <VBox.margin>
+                              <Insets right="10.0" />
+                           </VBox.margin>
+                        </ChoiceBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </VBox>
                </children>
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
             </HBox>
-         </children>
-         <GridPane.margin>
-            <Insets top="15.0" />
-         </GridPane.margin>
-      </HBox>
-      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <HBox alignment="BOTTOM_CENTER" prefHeight="58.0" prefWidth="393.0">
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
                <children>
-                  <Label text="Plataforma">
-                     <padding>
-                        <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
-                     </padding>
-                  </Label>
-                  <ChoiceBox prefWidth="150.0" />
+                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnAdd" text="Buscar" />
                </children>
             </HBox>
          </children>
          <GridPane.margin>
             <Insets bottom="5.0" />
          </GridPane.margin>
+         <padding>
+            <Insets top="35.0" />
+         </padding>
       </VBox>
-      <Label text="Modificar Clients">
+      <Label text="Afegir Video Games">
          <GridPane.margin>
             <Insets left="25.0" top="25.0" />
          </GridPane.margin>

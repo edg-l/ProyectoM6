@@ -20,15 +20,6 @@ public class ClientListViewController {
 
     public static Stage stageCreate = null;
 
-    /*
-    @FXML
-    private Button btnSearch;
-    @FXML
-    private Button btnCreateClient;
-    @FXML
-    private Button btnCreateVideoGame;
-    */
-
     @FXML
     private TableView<Client> tableClient;
 
