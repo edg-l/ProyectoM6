@@ -8,6 +8,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
+import java.sql.Date;
 import java.util.Collection;
 
 /**
@@ -22,12 +23,29 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public void insert(Videogame object) throws DuplicatedException {
+    public void insert(Videogame vi) throws DuplicatedException {
+        Document newVi = new Document();
+        newVi.append("id", vi.getId())
+                .append("name", vi.getName())
+                .append("platform", vi.getPlatform().ordinal())
+                .append("releaseDate", vi.getReleaseDate())
+                .append("price", vi.getPrice());
 
+        collection.insertOne(newVi);
     }
 
     @Override
     public Videogame getByID(Integer id) throws NotFoundException {
+
+        Document vi = new Document();
+
+        //int id = vi.getInteger("id");
+        String name = vi.getString("name");
+        Platform platform = Platform.values()[vi.getInteger("platform")];
+        Date releaseDate = (Date) vi.getDate("releaseDate");
+        int price = vi.getInteger("price");
+
+        Videogame newVi = new Videogame(id,name,platform,releaseDate,price);
         return null;
     }
 
