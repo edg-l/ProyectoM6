@@ -1,8 +1,10 @@
 package com.github;
 
 import com.github.exceptions.DatabaseException;
+import javafx.beans.Observable;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -14,11 +16,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import org.apache.log4j.Logger;
+import org.w3c.dom.Element;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -34,8 +38,9 @@ public class ClientListViewController {
     public static Stage stageCreate = null;
 
     @FXML
+    private Button btnRefreshTable;
+    @FXML
     private TableView<Client> tableClient;
-
     @FXML
     private TableColumn colID;
     @FXML
@@ -45,8 +50,8 @@ public class ClientListViewController {
     @FXML
     private TableColumn colCreatedAt;
 
-    private List<Client> clients;
-    private ObservableList<Client> clientObservableList;
+    private static List<Client> clients;
+    private static ObservableList<Client> clientObservableList;
 
     public void initialize() {
         colID.setCellValueFactory(new PropertyValueFactory<Client, Integer>("id"));
@@ -54,6 +59,18 @@ public class ClientListViewController {
         colCountry.setCellValueFactory(new PropertyValueFactory<Client, String>("country"));
         colCreatedAt.setCellValueFactory(new PropertyValueFactory<Client, Date>("createdAt"));
 
+        refreshTable();
+
+        btnRefreshTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+            @Override
+            public void handle(MouseEvent arg0) {
+                refreshTable();
+            }
+        });
+    }
+
+    public void refreshTable() {
         try {
             clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().getAll());
             clientObservableList = FXCollections.observableList(clients);
@@ -68,7 +85,7 @@ public class ClientListViewController {
 
     @FXML
     private void clickBtnSearch() {
-        // App.gestorPersistencia.getClientDAO().searchByName("nombre")
+
     }
 
     @FXML
@@ -89,7 +106,9 @@ public class ClientListViewController {
         }
     }
 
-    /** ventana de creación **/
+    /**
+     * ventana de creación
+     **/
     private void throwNewCreateWindows(FXMLLoader fxmlLoader) {
 
         try {

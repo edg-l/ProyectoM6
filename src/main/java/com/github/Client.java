@@ -1,5 +1,9 @@
 package com.github;
 
+import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanWrapper;
+
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -18,6 +22,7 @@ public class Client implements Comparable<Client> {
     private Date createdAt;
     private boolean isPartner;
     private List<Videogame> videogames;
+    private ReadOnlyBooleanProperty booleanWrapper = new ReadOnlyBooleanWrapper(false);
 
     public Client(int id, String name, String country, Date createdAt, boolean isPartner) {
         this.id = id;
@@ -31,7 +36,9 @@ public class Client implements Comparable<Client> {
     public int getId() {
         return id;
     }
-
+    public ReadOnlyBooleanProperty changeIndicatorProperty() {
+        return booleanWrapper;
+    }
     public void setId(int id) {
         this.id = id;
     }

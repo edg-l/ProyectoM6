@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ClientListViewController">
+<GridPane maxHeight="-Infinity" maxWidth="700.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="656.0" prefWidth="535.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.ClientListViewController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="541.0" minWidth="10.0" prefWidth="506.0" />
   </columnConstraints>
@@ -47,9 +48,14 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnSearch" mnemonicParsing="false" onMouseClicked="#clickBtnSearch" text="Cercar">
+            <Button fx:id="btnSearch" mnemonicParsing="false" onMouseClicked="#clickBtnSearch" text="Buscar">
                <HBox.margin>
                   <Insets left="20.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnRefreshTable" mnemonicParsing="false" onMouseClicked="#clickBtnSearch" text="Actualizar">
+               <HBox.margin>
+                  <Insets left="25.0" />
                </HBox.margin>
             </Button>
          </children>

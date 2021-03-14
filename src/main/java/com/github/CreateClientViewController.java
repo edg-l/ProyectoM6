@@ -82,7 +82,7 @@ public class CreateClientViewController {
     }
 
     @FXML
-    private void clickBtnAdd() {
+    private void clickBtnAdd() throws InterruptedException {
         Client client = new Client(
                 Integer.parseInt(txtID.getText()),
                 txtNom.getText(),
