@@ -21,11 +21,10 @@
          <children>
             <TableView fx:id="tableClient" maxHeight="1.7976931348623157E308" maxWidth="700.0" prefHeight="217.0" prefWidth="554.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="DNI" />
-                <TableColumn prefWidth="97.0" text="Nombre" />
-                  <TableColumn prefWidth="111.0" text="País" />
-                  <TableColumn prefWidth="118.0" text="Fecha Creación" />
-                  <TableColumn prefWidth="83.0" text="Es Socio" />
+                <TableColumn fx:id="colID" prefWidth="75.0" text="DNI" />
+                <TableColumn fx:id="colName" prefWidth="97.0" text="Nombre" />
+                  <TableColumn fx:id="colCountry" prefWidth="111.0" text="País" />
+                  <TableColumn fx:id="colCreatedAt" prefWidth="118.0" text="Fecha Creación" />
               </columns>
             </TableView>
          </children>
