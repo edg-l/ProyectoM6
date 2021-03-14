@@ -187,17 +187,16 @@ public class ClientMongoDAO implements ClientDAO {
         LOGGER.debug("Buscando cliente:");
         Document client = clientToDocument(object);
 
-        Client clientBBDD = null;
+        Document clientBBDD = null;
 
         MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
 
         if (cursor.hasNext()) {
-            Document d = cursor.next();
-            clientBBDD = documentToClient(d);
+            clientBBDD = cursor.next();
         }
 
         LOGGER.debug("Update cliente:");
-        collection.updateOne((Bson) clientBBDD,client);
+        collection.updateOne(clientBBDD,client);
 
     }
 
