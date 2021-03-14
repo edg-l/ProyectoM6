@@ -46,11 +46,16 @@ public class ClientMongoDAO implements ClientDAO {
         LOGGER.debug("Insertando cliente: " + cli.getName());
 
         try {
-
-            Document newClient = clientToDocument(cli);
-            collection.insertOne(newClient);
-
-        } catch (MongoException throwables) {
+            Client checkID = this.getByID(cli.getId());
+            if (checkID == null) {
+                Document newClient = clientToDocument(cli);
+                collection.insertOne(newClient);
+            } else {
+                throw new NotFoundException("error al insertar cliente con id " + cli.getId() + " ya existe");
+                // TIENE QUE SER NOTFOUND PORQUE NO HAY CODIGO DE ERROR
+                //NO PUEDE SER NI DATABASEEXCEPTION NI ERROREXCEPTION
+            }
+        } catch (MongoException | NotFoundException throwables) {
             throw new DatabaseException("error al insertar cliente con id " + cli.getId(), throwables);
         }
 
