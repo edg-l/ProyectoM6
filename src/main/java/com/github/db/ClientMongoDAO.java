@@ -14,6 +14,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -181,7 +182,22 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public void update(Client object) {
+    public void update(Client object) throws NotFoundException, DatabaseException {
+
+        LOGGER.debug("Buscando cliente:");
+        Document client = clientToDocument(object);
+
+        Client clientBBDD = null;
+
+        MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
+
+        if (cursor.hasNext()) {
+            Document d = cursor.next();
+            clientBBDD = documentToClient(d);
+        }
+
+        LOGGER.debug("Update cliente:");
+        collection.updateOne((Bson) clientBBDD,client);
 
     }
 

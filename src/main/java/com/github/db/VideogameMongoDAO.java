@@ -14,6 +14,7 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.log4j.Logger;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class VideogameMongoDAO implements VideogameDAO {
         }
     }
 
-    private Document gameToDocument(Videogame vi) {
+    public Document gameToDocument(Videogame vi) {
 
         Document newVi = new Document("id", vi.getId())
                 .append("name", vi.getName())
@@ -147,7 +148,21 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public void update(Videogame object) {
+    public void update(Videogame object) throws NotFoundException {
+        LOGGER.debug("Buscando videogame:");
+        Document client = gameToDocument(object);
+
+        Videogame videogameBBDD = null;
+
+        MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
+
+        if (cursor.hasNext()) {
+            Document d = cursor.next();
+            videogameBBDD = documentToGame(d);
+        }
+
+        LOGGER.debug("Update videogame:");
+        collection.updateOne((Bson) videogameBBDD,client);
 
     }
 
