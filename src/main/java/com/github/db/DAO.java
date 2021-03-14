@@ -38,13 +38,13 @@ public interface DAO<T, S> {
      * Borra un objeto.
      * @param id La id del objeto
      */
-    void delete(S id) throws DatabaseException;
+    void delete(S id) throws DatabaseException, NotFoundException;
 
     /**
      * Borra todos los objectos en la lista.
      * @param objects La lista de objectos a borrar
      */
-    void deleteAll(Iterable<T> objects) throws DatabaseException;
+    void deleteAll(Iterable<T> objects) throws DatabaseException, NotFoundException;
 
     /**
      * Actualiza el objecto.

@@ -1,21 +1,33 @@
 package com.github.db;
 
+import com.github.Client;
 import com.github.Platform;
 import com.github.Videogame;
+import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
+import org.apache.log4j.Logger;
 import org.bson.Document;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * La implementacion del videogame DAO para mongo.
  * @author Kevin Fernandez
  */
 public class VideogameMongoDAO implements VideogameDAO {
+
+    private static final Logger LOGGER = Logger.getLogger(ClientMongoDAO.class);
+
     private MongoCollection<Document> collection;
 
     public VideogameMongoDAO(MongoDatabase database) {
@@ -34,34 +46,97 @@ public class VideogameMongoDAO implements VideogameDAO {
         collection.insertOne(newVi);
     }
 
-    @Override
-    public Videogame getByID(Integer id) throws NotFoundException {
+    private Document gameToDocument(Videogame vi) {
 
-        Document vi = new Document();
+        Document newVi = new Document("id", vi.getId())
+                .append("name", vi.getName())
+                .append("platform", vi.getPlatform())
+                .append("releaseDate", vi.getReleaseDate())
+                .append("price", vi.getPrice());
 
-        //int id = vi.getInteger("id");
+        return newVi;
+    }
+
+    private Videogame documentToGame(Document vi) throws NotFoundException {
+
+        int id = vi.getInteger("id");
         String name = vi.getString("name");
         Platform platform = Platform.values()[vi.getInteger("platform")];
         Date releaseDate = (Date) vi.getDate("releaseDate");
         int price = vi.getInteger("price");
 
         Videogame newVi = new Videogame(id,name,platform,releaseDate,price);
-        return null;
+
+        return newVi;
+    }
+    @Override
+    public Videogame getByID(Integer id) throws NotFoundException, DatabaseException {
+
+        Document vi = new Document();
+
+        LOGGER.debug("Buscando cliente por id: " + id);
+
+        Videogame newVi = null;
+
+        try {
+            MongoCursor<Document> cursor = collection.find(Filters.eq("id", id)).iterator();
+
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                newVi = documentToGame(d);
+            } else {
+                throw new NotFoundException(String.format("el videogame con id %d no se ha encontrado", id));
+            }
+        } catch (MongoException e) {
+            throw new DatabaseException("error al obtener videogame con id " + id, e);
+        }
+
+
+        return newVi;
     }
 
     @Override
-    public Collection<Videogame> getAll() {
-        return null;
+    public Collection<Videogame> getAll() throws DatabaseException {
+
+        LOGGER.debug("Buscando todos los videojuegos");
+
+        List<Videogame> videogames = new ArrayList<>();
+
+        try {
+            MongoCursor<Document> cursor = collection.find().iterator();
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                videogames.add(documentToGame(d));
+            }
+        } catch (MongoException | NotFoundException throwables) {
+            throw new DatabaseException("error al obtener todos los videojuegos", throwables);
+        }
+
+        return videogames;
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws NotFoundException, DatabaseException {
+        try {
+            DeleteResult cursor = collection.deleteOne(Filters.eq("id", id));
 
+            if (cursor.wasAcknowledged()) {
+                LOGGER.debug("Videogame id: " + id + " deleted");
+            } else {
+                throw new NotFoundException(String.format("el videogame con id %d no se ha encontrado", id));
+            }
+        } catch (MongoException e) {
+            throw new DatabaseException("error al obtener videogame con id " + id, e);
+        }
     }
 
     @Override
-    public void deleteAll(Iterable<Videogame> objects) {
-
+    public void deleteAll(Iterable<Videogame> objects) throws DatabaseException {
+        try {
+            collection.drop();
+        } catch (MongoException e) {
+            throw new DatabaseException("error al obtener client con id ", e);
+        }
     }
 
     @Override
@@ -70,12 +145,40 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public Collection<Videogame> getByName(String name) {
-        return null;
+    public Collection<Videogame> getByName(String name) throws DatabaseException {
+        LOGGER.debug("Buscando todos los clientes de nombre: " + name);
+
+        List<Videogame> videogames = new ArrayList<>();
+
+        try {
+            MongoCursor<Document> cursor = collection.find(Filters.eq("name", name)).iterator();
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                videogames.add(documentToGame(d));
+            }
+        } catch (MongoException | NotFoundException throwables) {
+            throw new DatabaseException("error al obtener todos los clientes de nombre: " + name, throwables);
+        }
+
+        return videogames;
     }
 
     @Override
-    public Collection<Videogame> getByPlatform(Platform platform) {
-        return null;
+    public Collection<Videogame> getByPlatform(Platform platform) throws DatabaseException {
+        LOGGER.debug("Buscando todos los clientes de nombre: " + platform.toString());
+
+        List<Videogame> videogames = new ArrayList<>();
+
+        try {
+            MongoCursor<Document> cursor = collection.find(Filters.eq("platform", platform.toString())).iterator();
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                videogames.add(documentToGame(d));
+            }
+        } catch (MongoException | NotFoundException throwables) {
+            throw new DatabaseException("error al obtener todos los clientes de nombre: " + platform.toString(), throwables);
+        }
+
+        return videogames;
     }
 }

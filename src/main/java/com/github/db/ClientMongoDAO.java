@@ -11,6 +11,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.client.result.DeleteResult;
 import org.apache.log4j.Logger;
 import org.bson.Document;
 
@@ -77,7 +78,7 @@ public class ClientMongoDAO implements ClientDAO {
         return newClient;
     }
 
-    private Client documentToClient(Document cli) throws NotFoundException {
+    private Client documentToClient(Document cli) throws NotFoundException, DatabaseException {
 
         int id = cli.getInteger("id");
         String name = cli.getString("name");
@@ -151,13 +152,27 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(Integer id) throws NotFoundException, DatabaseException {
+        try {
+            DeleteResult cursor = collection.deleteOne(Filters.eq("id", id));
 
+            if (cursor.wasAcknowledged()) {
+                LOGGER.debug("Client id: " + id + " deleted");
+            } else {
+                throw new NotFoundException(String.format("el client con id %d no se ha encontrado", id));
+            }
+        } catch (MongoException e) {
+            throw new DatabaseException("error al obtener client con id " + id, e);
+        }
     }
 
     @Override
-    public void deleteAll(Iterable<Client> objects) {
-
+    public void deleteAll(Iterable<Client> objects) throws NotFoundException, DatabaseException {
+        try {
+            collection.drop();
+        } catch (MongoException e) {
+            throw new DatabaseException("error al obtener client con id ", e);
+        }
     }
 
     @Override
@@ -166,12 +181,40 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public Collection<Client> searchByName(String nameQuery) {
-        return null;
+    public Collection<Client> searchByName(String nameQuery) throws DatabaseException {
+        LOGGER.debug("Buscando todos los clientes de nombre: " + nameQuery);
+
+        List<Client> clients = new ArrayList<>();
+
+        try {
+            MongoCursor<Document> cursor = collection.find(Filters.eq("name", nameQuery)).iterator();
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                clients.add(documentToClient(d));
+            }
+        } catch (MongoException | NotFoundException | DatabaseException throwables) {
+            throw new DatabaseException("error al obtener todos los clientes de nombre: " + nameQuery, throwables);
+        }
+
+        return clients;
     }
 
     @Override
-    public Collection<Client> getByCountry(String country) {
-        return null;
+    public Collection<Client> getByCountry(String country) throws DatabaseException {
+        LOGGER.debug("Buscando todos los clientes de país: " + country);
+
+        List<Client> clients = new ArrayList<>();
+
+        try {
+            MongoCursor<Document> cursor = collection.find(Filters.eq("country", country)).iterator();
+            if (cursor.hasNext()) {
+                Document d = cursor.next();
+                clients.add(documentToClient(d));
+            }
+        } catch (MongoException | NotFoundException | DatabaseException throwables) {
+            throw new DatabaseException("error al obtener todos los clientes de país: " + country, throwables);
+        }
+
+        return clients;
     }
 }
