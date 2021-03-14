@@ -148,12 +148,10 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public void update(Videogame object) throws NotFoundException {
+    public void update(Videogame object) throws DatabaseException {
         LOGGER.debug("Buscando videogame:");
-        Document videogame = gameToDocument(object);
 
         Document videogameBBDD = null;
-
         MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
 
         if (cursor.hasNext()) {
@@ -161,7 +159,12 @@ public class VideogameMongoDAO implements VideogameDAO {
         }
 
         LOGGER.debug("Update videogame:");
-        collection.updateOne(videogameBBDD,videogame);
+        if (videogameBBDD != null) {
+            Document videogame = gameToDocument(object);
+            collection.updateOne(videogameBBDD, videogame);
+        } else {
+            this.insert(object);
+        }
 
     }
 

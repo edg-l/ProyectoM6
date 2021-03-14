@@ -182,13 +182,10 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public void update(Client object) throws NotFoundException, DatabaseException {
-
+    public void update(Client object) throws DatabaseException {
         LOGGER.debug("Buscando cliente:");
-        Document client = clientToDocument(object);
 
         Document clientBBDD = null;
-
         MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
 
         if (cursor.hasNext()) {
@@ -196,8 +193,12 @@ public class ClientMongoDAO implements ClientDAO {
         }
 
         LOGGER.debug("Update cliente:");
-        collection.updateOne(clientBBDD,client);
-
+        if (clientBBDD != null) {
+            Document client = clientToDocument(object);
+            collection.updateOne(clientBBDD, client);
+        } else {
+            this.insert(object);
+        }
     }
 
     @Override
