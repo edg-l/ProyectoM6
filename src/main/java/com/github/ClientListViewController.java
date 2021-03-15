@@ -2,6 +2,10 @@ package com.github;
 
 import com.github.exceptions.DatabaseException;
 import javafx.beans.Observable;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -37,6 +41,7 @@ public class ClientListViewController {
 
     public static Stage stageCreate = null;
 
+    public static int listSize = 0;
     @FXML
     private Button btnRefreshTable;
     @FXML
@@ -50,8 +55,8 @@ public class ClientListViewController {
     @FXML
     private TableColumn colCreatedAt;
 
-    private static List<Client> clients;
-    private static ObservableList<Client> clientObservableList;
+    public static List<Client> clients;
+    public ObservableList<Client> clientObservableList;
 
     public void initialize() {
         colID.setCellValueFactory(new PropertyValueFactory<Client, Integer>("id"));
@@ -61,13 +66,25 @@ public class ClientListViewController {
 
         refreshTable();
 
-        btnRefreshTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        clientObservableList.addListener(new ListChangeListener<Client>() {
+            @Override
+            public void onChanged(Change<? extends Client> c) {
+                refreshTable();
+                LOGGER.error("Actualizando lista clientes");
+            }
+        });
 
+        btnRefreshTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent arg0) {
                 refreshTable();
+                LOGGER.error("Actualizando lista clientes");
             }
         });
+    }
+
+    public static void addClient(Client cli) {
+        clients.add(cli);
     }
 
     public void refreshTable() {
@@ -75,6 +92,7 @@ public class ClientListViewController {
             clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().getAll());
             clientObservableList = FXCollections.observableList(clients);
             tableClient.setItems(clientObservableList);
+
         } catch (DatabaseException e) {
             LOGGER.error("error al obtener los clientes");
             LOGGER.error(e);

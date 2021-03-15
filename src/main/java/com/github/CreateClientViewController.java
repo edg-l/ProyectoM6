@@ -2,8 +2,10 @@ package com.github;
 
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +15,7 @@ import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * @author Kevin Fernandez
@@ -82,7 +85,7 @@ public class CreateClientViewController {
     }
 
     @FXML
-    private void clickBtnAdd() throws InterruptedException {
+    private void clickBtnAdd() {
         Client client = new Client(
                 Integer.parseInt(txtID.getText()),
                 txtNom.getText(),
@@ -93,13 +96,14 @@ public class CreateClientViewController {
 
         try {
             App.gestorPersistencia.getClientDAO().insert(client);
+            ClientListViewController.addClient(client);//trying to trigger observable
             ClientListViewController.stageCreate.close();
             ClientListViewController.stageCreate = null;
         } catch (DuplicatedException e) {
             LOGGER.debug(e);
-            txtError.setText("Ja existeix un client amb aquest DNI.");
+            txtError.setText("Ya existe un cliente con este DNI.");
         } catch (DatabaseException e) {
-            txtError.setText("Error intern de la base de dades.");
+            txtError.setText("Error interno de la base de datos.");
             LOGGER.error(e);
             LOGGER.error(e.getCause());
         }
