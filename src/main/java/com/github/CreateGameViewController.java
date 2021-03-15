@@ -5,10 +5,7 @@ import com.github.exceptions.DuplicatedException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
@@ -22,6 +19,8 @@ public class CreateGameViewController {
     private static final Logger LOGGER = Logger.getLogger(CreateGameViewController.class);
 
     @FXML
+    private Label txtError;
+    @FXML
     private TextField txtNom;
     @FXML
     private TextField txtID;
@@ -29,10 +28,6 @@ public class CreateGameViewController {
     private DatePicker dateRelease;
     @FXML
     private TextField txtPreu;
-    @FXML
-    private Button btnBack;
-    @FXML
-    private Button btnAdd;
     @FXML
     private ChoiceBox<Platform> choicePlatform;
 
@@ -66,9 +61,9 @@ public class CreateGameViewController {
             ClientListViewController.stageCreate = null;
         } catch (DuplicatedException e) {
             LOGGER.debug(e);
-            //txtError.setText("Ya existe un cliente con este DNI.");
+            txtError.setText("Ya existe un videogame con este ID.");
         } catch (DatabaseException e) {
-            //txtError.setText("Error interno de la base de datos.");
+            txtError.setText("Error interno de la base de datos.");
             LOGGER.error(e);
             LOGGER.error(e.getCause());
         }
@@ -78,18 +73,6 @@ public class CreateGameViewController {
     private void clickBtnBack() {
         ClientListViewController.stageCreate.close();
         ClientListViewController.stageCreate = null;
-        // SOLO CLOSE
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
-        Scene scene;
-        try {
-            scene = new Scene(fxmlLoader.load(), 535, 615);
-            Stage stage = (Stage) btnBack.getScene().getWindow();
-            stage.setResizable(false);
-            stage.setScene(scene);
-        } catch (IOException io) {
-            io.printStackTrace();
-        }*/
     }
 
 }

@@ -53,11 +53,11 @@ public class VideogameJDBCDAO implements VideogameDAO {
         } catch (SQLException throwables) {
             if(throwables.getErrorCode() == 1062) {
                 throw new DuplicatedException(
-                        String.format("error al obtener insertar con nombre %s, ya existe", object.getName()),
+                        String.format("error al obtener insertar videojuego con nombre %s, ya existe", object.getName()),
                         throwables
                 );
             } else {
-                throw new DatabaseException("error al insertar cliente con nombre " + object.getName(), throwables);
+                throw new DatabaseException("error al insertar videojuego con nombre " + object.getName(), throwables);
             }
 
         }

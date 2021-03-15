@@ -19,11 +19,11 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
    </rowConstraints>
    <children>
-      <VBox prefHeight="413.0" prefWidth="411.0">
+      <VBox prefHeight="277.0" prefWidth="411.0">
          <children>
             <Label prefHeight="70.0" prefWidth="351.0" text="Create Video Game">
                <VBox.margin>
-                  <Insets left="25.0" right="25.0" top="25.0" />
+                  <Insets left="25.0" right="25.0" top="10.0" />
                </VBox.margin>
                <font>
                   <Font size="25.0" />
@@ -110,12 +110,12 @@
                            <children>
                               <Button fx:id="btnAdd" mnemonicParsing="false" onMouseClicked="#clickBtnAdd" text="Afegir">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" top="10.0" />
+                                    <Insets top="10.0" />
                                  </HBox.margin>
                               </Button>
                               <Button fx:id="btnBack" mnemonicParsing="false" onMouseClicked="#clickBtnBack" text="Tornar">
                                  <HBox.margin>
-                                    <Insets bottom="10.0" left="20.0" top="10.0" />
+                                    <Insets left="20.0" top="10.0" />
                                  </HBox.margin>
                               </Button>
                            </children>
@@ -130,7 +130,15 @@
                   </VBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="25.0" left="25.0" right="25.0" />
+                  <Insets left="25.0" right="25.0" />
+               </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="76.0" prefWidth="411.0">
+               <children>
+                  <Label fx:id="txtError" alignment="CENTER" prefHeight="28.0" prefWidth="348.0" textFill="RED" />
+               </children>
+               <VBox.margin>
+                  <Insets />
                </VBox.margin>
             </HBox>
          </children>
