@@ -82,7 +82,7 @@ public class ModifyClientViewController {
     public void initialize() {
         //test
         ArrayList<Videogame> listgames = new ArrayList<Videogame>();
-        Videogame newVi = new Videogame(12,"mario",Platform.PC,new Date(System.nanoTime()),123);
+        Videogame newVi = new Videogame(12, "mario", Platform.PC, new Date(System.nanoTime()), 123);
         listgames.add(newVi);
         client.setVideogames(listgames);
         //test
@@ -104,7 +104,8 @@ public class ModifyClientViewController {
         colPlatform.setCellValueFactory(new PropertyValueFactory<Videogame, String>("platform"));
         colPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Date>("price"));
 
-        refreshTables();
+        refreshTableClient();
+        refreshTableGames(null);
 
         tableGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -119,29 +120,49 @@ public class ModifyClientViewController {
 
                         client.getVideogames().add(videogameSelected);
 
-                        refreshTables();
+                        refreshTableClient();
                     }
                 }
             }
         });
     }
 
-    public void refreshTables() {
+    public void refreshTableGames(Platform platform) {
+
+        if (platform == null) {
+
+            try {
+                videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
+                videogamesObservableList = FXCollections.observableArrayList(videogames);
+                tableGame.setItems(videogamesObservableList);
+
+            } catch (DatabaseException e) {
+                LOGGER.error("error al obtener los videogames");
+                LOGGER.error(e);
+                LOGGER.error(e.getCause());
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getByPlatform(platform));
+                videogamesObservableList = FXCollections.observableArrayList(videogames);
+                tableGame.setItems(videogamesObservableList);
+
+            } catch (DatabaseException e) {
+                LOGGER.error("error al obtener los videogames");
+                LOGGER.error(e);
+                LOGGER.error(e.getCause());
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void refreshTableClient() {
 
         videogamesClient = client.getVideogames();
         videogamesClientObservableList = FXCollections.observableArrayList(client.getVideogames());
         tableClient.setItems(videogamesClientObservableList);
 
-        try {
-            videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
-            videogamesObservableList = FXCollections.observableArrayList(videogames);
-            tableGame.setItems(videogamesObservableList);
 
-        } catch (DatabaseException e) {
-            LOGGER.error("error al obtener los videogames");
-            LOGGER.error(e);
-            LOGGER.error(e.getCause());
-            e.printStackTrace();
-        }
     }
 }
