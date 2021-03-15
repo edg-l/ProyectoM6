@@ -113,6 +113,15 @@
                   </VBox>
                </children>
             </HBox>
+            <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
+               <children>
+                  <Button fx:id="btnRemove" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Borrar Video Game">
+                     <HBox.margin>
+                        <Insets top="13.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <padding>
             <Insets top="35.0" />
@@ -204,6 +213,9 @@
                <children>
                   <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar" />
                </children>
+               <VBox.margin>
+                  <Insets top="25.0" />
+               </VBox.margin>
             </HBox>
          </children>
          <GridPane.margin>
@@ -223,7 +235,7 @@
       </Label>
       <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="384.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#clickBtnSaveAndExit" text="Guardar cambios">
+            <Button fx:id="btnSave" mnemonicParsing="false" text="Guardar cambios">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin>

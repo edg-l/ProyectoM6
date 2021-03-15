@@ -59,7 +59,6 @@ public class ConnectionViewController {
         txtUser.setText("root");
         txtPass.setText("");
 
-        //group.selectedToggleProperty().addListener((observable, oldVal, newVal) -> txtHost.setText(newVal.toString() + " was selected"));
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {

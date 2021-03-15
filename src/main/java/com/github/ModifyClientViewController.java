@@ -1,16 +1,14 @@
 package com.github;
 
 import com.github.exceptions.DatabaseException;
+import com.github.exceptions.NotFoundException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -31,6 +29,10 @@ public class ModifyClientViewController {
 
     public static Client client;
 
+    @FXML
+    Button btnSave;
+    @FXML
+    Button btnRemove;
     @FXML
     TextField txtNomClient;
     @FXML
@@ -68,24 +70,14 @@ public class ModifyClientViewController {
     private List<Videogame> videogames;
     public ObservableList<Videogame> videogamesObservableList;
 
-
-    @FXML
-    private void clickBtnSaveAndExit() {
-
-    }
-
     @FXML
     private void clickBtnFind() {
 
     }
 
     public void initialize() {
-        //test
-        ArrayList<Videogame> listgames = new ArrayList<Videogame>();
-        Videogame newVi = new Videogame(12, "mario", Platform.PC, new Date(System.nanoTime()), 123);
-        listgames.add(newVi);
-        client.setVideogames(listgames);
-        //test
+
+        LOGGER.error(client.getVideogames().size());
         txtNomClient.setText(client.getName());
         txtIDClient.setText(client.getId() + "");
         if (client.isPartner()) {
@@ -106,6 +98,48 @@ public class ModifyClientViewController {
 
         refreshTableClient();
         refreshTableGames(null);
+
+        btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (tableClient.getSelectionModel().getSelectedItem() != null) {
+                    Videogame videogameSelected = videogamesClient.get(tableClient.getSelectionModel().getSelectedIndex());
+                    client.getVideogames().remove(videogameSelected);
+
+                    refreshTableClient();
+                }
+            }
+        });
+
+        btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                try {
+                    App.gestorPersistencia.getClientDAO().update(client);
+                } catch (DatabaseException e) {
+                    //txtError.setText("Error interno de la base de datos.");
+                    LOGGER.error(e);
+                    LOGGER.error(e.getCause());
+                } catch (NotFoundException e) {
+                    //txtError.setText("Error interno de la base de datos.");
+                    LOGGER.error(e);
+                    LOGGER.error(e.getCause());
+                }
+
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
+                Scene scene;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 535, 656);
+                    Stage stage = (Stage) btnSave.getScene().getWindow();
+                    stage.setTitle("Clients List");
+                    stage.setResizable(false);
+                    stage.setScene(scene);
+                } catch (IOException io) {
+                    io.printStackTrace();
+                }
+            }
+
+        });
 
         tableGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -160,7 +194,7 @@ public class ModifyClientViewController {
     public void refreshTableClient() {
 
         videogamesClient = client.getVideogames();
-        videogamesClientObservableList = FXCollections.observableArrayList(client.getVideogames());
+        videogamesClientObservableList = FXCollections.observableArrayList(videogamesClient);
         tableClient.setItems(videogamesClientObservableList);
 
 

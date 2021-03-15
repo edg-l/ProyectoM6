@@ -96,7 +96,6 @@ public class CreateClientViewController {
 
         try {
             App.gestorPersistencia.getClientDAO().insert(client);
-            ClientListViewController.addClient(client);//trying to trigger observable
             ClientListViewController.stageCreate.close();
             ClientListViewController.stageCreate = null;
         } catch (DuplicatedException e) {
@@ -113,18 +112,6 @@ public class CreateClientViewController {
     private void clickBtnBack() {
         ClientListViewController.stageCreate.close();
         ClientListViewController.stageCreate = null;
-        // SOLO CLOSE VENTANA
-        /*
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
-        Scene scene;
-        try {
-            scene = new Scene(fxmlLoader.load(), 535, 615);
-            Stage stage = (Stage) btnBack.getScene().getWindow();
-            stage.setResizable(false);
-            stage.setScene(scene);
-        } catch (IOException io) {
-            io.printStackTrace();
-        }*/
     }
 
 }
