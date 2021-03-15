@@ -29,8 +29,10 @@
          <children>
             <TableView fx:id="tableClient" prefHeight="309.0" prefWidth="332.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="colIDclientgame" prefWidth="37.0" text="ID" />
+                <TableColumn fx:id="colNameclientgame" prefWidth="96.0" text="Nombre" />
+                  <TableColumn fx:id="colPlatformclientgame" prefWidth="92.0" text="Plataforma" />
+                  <TableColumn fx:id="colPriceclientgame" prefWidth="106.0" text="Precio" />
               </columns>
             </TableView>
          </children>
@@ -84,12 +86,12 @@
                   </VBox>
                   <VBox prefHeight="94.0" prefWidth="197.0">
                      <children>
-                        <TextField fx:id="txtNom" alignment="TOP_LEFT" editable="false">
+                        <TextField fx:id="txtNomClient" alignment="TOP_LEFT" editable="false">
                            <VBox.margin>
                               <Insets bottom="10.0" right="10.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="txtID" editable="false">
+                        <TextField fx:id="txtIDClient" editable="false">
                            <VBox.margin>
                               <Insets bottom="10.0" right="10.0" />
                            </VBox.margin>
@@ -122,8 +124,10 @@
          <children>
             <TableView fx:id="tableGame" prefHeight="309.0" prefWidth="332.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="C1" />
-                  <TableColumn prefWidth="75.0" text="C2" />
+                  <TableColumn fx:id="colID" prefWidth="42.0" text="ID" />
+                  <TableColumn fx:id="colName" prefWidth="86.0" text="Nombre" />
+                  <TableColumn fx:id="colPlatform" prefWidth="96.0" text="Plataforma" />
+                  <TableColumn fx:id="colPrice" prefWidth="107.0" text="Precio" />
                </columns>
             </TableView>
          </children>
@@ -198,7 +202,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
                <children>
-                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnAdd" text="Buscar" />
+                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar" />
                </children>
             </HBox>
          </children>
@@ -217,5 +221,14 @@
             <Font size="25.0" />
          </font>
       </Label>
+      <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="384.0" GridPane.columnIndex="1">
+         <children>
+            <Button fx:id="btnSave" mnemonicParsing="false" onAction="#clickBtnSaveAndExit" text="Guardar cambios">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </GridPane>

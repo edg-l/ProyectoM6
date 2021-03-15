@@ -1,6 +1,7 @@
 package com.github;
 
 import com.github.exceptions.DatabaseException;
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyProperty;
@@ -16,10 +17,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -66,9 +69,26 @@ public class ClientListViewController {
 
         refreshTable();
 
-        clientObservableList.addListener(new ListChangeListener<Client>() {
+        tableClient.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
-            public void onChanged(Change<? extends Client> c) {
+            public void handle(MouseEvent event) {
+                if (event.getClickCount() > 1) {
+                    if (tableClient.getSelectionModel().getSelectedItem() != null) {
+                        Client clientSelect = clients.get(tableClient.getSelectionModel().getSelectedIndex());
+                        LOGGER.error("client seleccionado" + clientSelect.toString());
+                        ModifyClientViewController.client = clientSelect;
+
+                        throwNewModifyWindows();
+
+                    }
+                }
+            }
+        });
+
+        /** NO FUNCIONA **/
+        clientObservableList.addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(Change c) {
                 refreshTable();
                 LOGGER.error("Actualizando lista clientes");
             }
@@ -82,7 +102,7 @@ public class ClientListViewController {
             }
         });
     }
-
+    /** FORMA PARTE DEL INTENTO DE TRIGGER DEL OBSERVABLE **/
     public static void addClient(Client cli) {
         clients.add(cli);
     }
@@ -90,9 +110,8 @@ public class ClientListViewController {
     public void refreshTable() {
         try {
             clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().getAll());
-            clientObservableList = FXCollections.observableList(clients);
+            clientObservableList = FXCollections.observableArrayList(clients);
             tableClient.setItems(clientObservableList);
-
         } catch (DatabaseException e) {
             LOGGER.error("error al obtener los clientes");
             LOGGER.error(e);
@@ -136,6 +155,17 @@ public class ClientListViewController {
             stageCreate.setScene(scene);
             stageCreate.initStyle(StageStyle.UNDECORATED);
             stageCreate.show();
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+    }
+    private void throwNewModifyWindows() {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ModifyClientView" + ".fxml"));
+        try {
+            Scene scene = new Scene(fxmlLoader.load(), 791, 615);
+            Stage stage = (Stage) tableClient.getScene().getWindow();
+            stage.setResizable(false);
+            stage.setScene(scene);
         } catch (IOException io) {
             io.printStackTrace();
         }

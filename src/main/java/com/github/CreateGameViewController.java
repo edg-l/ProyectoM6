@@ -1,5 +1,7 @@
 package com.github;
 
+import com.github.exceptions.DatabaseException;
+import com.github.exceptions.DuplicatedException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -22,9 +24,9 @@ public class CreateGameViewController {
     @FXML
     private TextField txtNom;
     @FXML
-    private TextField txtId;
+    private TextField txtID;
     @FXML
-    private DatePicker releaseDate;
+    private DatePicker dateRelease;
     @FXML
     private TextField txtPreu;
     @FXML
@@ -44,7 +46,7 @@ public class CreateGameViewController {
     private void clickBtnAdd() {
 
         String name = txtNom.getText();
-        int id = Integer.parseInt(txtId.getText());
+        int id = Integer.parseInt(txtID.getText());
         Platform platform = Platform.PC;
 
         for (Platform platform1 : Platform.values()) {
@@ -53,11 +55,23 @@ public class CreateGameViewController {
             }
         }
 
-        java.sql.Date date = java.sql.Date.valueOf(releaseDate.getValue());
+        java.sql.Date date = java.sql.Date.valueOf(dateRelease.getValue());
         int preu = Integer.parseInt(txtPreu.getText());
 
         Videogame newVideoGame = new Videogame(id, name, platform, date, preu);
 
+        try {
+            App.gestorPersistencia.getVideogameDAO().insert(newVideoGame);
+            ClientListViewController.stageCreate.close();
+            ClientListViewController.stageCreate = null;
+        } catch (DuplicatedException e) {
+            LOGGER.debug(e);
+            //txtError.setText("Ya existe un cliente con este DNI.");
+        } catch (DatabaseException e) {
+            //txtError.setText("Error interno de la base de datos.");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+        }
     }
 
     @FXML
