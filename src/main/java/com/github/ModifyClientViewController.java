@@ -189,8 +189,12 @@ public class ModifyClientViewController {
 
         btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
+                Videogame videogameSelected;
                 if (tableClient.getSelectionModel().getSelectedItem() != null) {
-                    Videogame videogameSelected = client.getVideogames().get(tableClient.getSelectionModel().getSelectedIndex());
+                    videogameSelected = client.getVideogames().get(tableClient.getSelectionModel().getSelectedIndex());
+                } else {
+                    videogameSelected = client.getVideogames().get((int)tableClient.getItems().stream().count()-1);
+                }
                     LOGGER.debug("videogame seleccionado" + videogameSelected.toString());
 
                     /**falta añadir objeto bbdd*/
@@ -199,7 +203,8 @@ public class ModifyClientViewController {
                     client.getVideogames().remove(videogameSelected);
 
                     refreshTableClient();
-                }
+
+
             }
         });
 
