@@ -34,7 +34,7 @@ public class ModifyClientViewController {
     @FXML
     private TextField txtNomGame;
     @FXML
-    private TextField txt
+    private TextField txtIDGame;
     @FXML
     Button btnCancel;
     @FXML
@@ -99,10 +99,18 @@ public class ModifyClientViewController {
     }
     private void clickRadio(String radio) {
         if (radio.equals("radioName")) {
-            txtNomGame.disable();
-        } else if (radio.equals("radioID")) {
+            txtIDGame.setDisable(true);
+            txtNomGame.setDisable(false);
+            choicePlatform.setDisable(true);
 
+        } else if (radio.equals("radioID")) {
+            txtIDGame.setDisable(false);
+            txtNomGame.setDisable(true);
+            choicePlatform.setDisable(true);
         } else if (radio.equals("radioPlatform")) {
+            txtIDGame.setDisable(true);
+            txtNomGame.setDisable(true);
+            choicePlatform.setDisable(false);
 
         }
     }
@@ -129,8 +137,8 @@ public class ModifyClientViewController {
             @Override
             public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
                 RadioButton chk = (RadioButton) radioName.getToggleGroup().getSelectedToggle(); // Cast object to radio button
-                LOGGER.debug("Selected - " + chk.getText());
-                clickRadio(chk.getText());
+                LOGGER.debug("Selected - " + chk.getId());
+                clickRadio(chk.getId());
             }
         });
 
