@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -31,6 +32,10 @@ public class ClientListViewController {
 
     public static Stage stageCreate = null;
 
+    @FXML
+    private TextField txtName;
+    @FXML
+    private Button btnSearch;
     @FXML
     private Button btnRefreshTable;
     @FXML
@@ -55,11 +60,6 @@ public class ClientListViewController {
 
         refreshTable();
 
-        /** OBSERVER ACTUALIZAR AUTOMATICO **/
-        clientObservableList.addListener((ListChangeListener<Client>) c ->{
-            refreshTable();
-        });
-
         tableClient.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -69,10 +69,18 @@ public class ClientListViewController {
                         LOGGER.debug("client seleccionado" + clientSelect.toString());
                         ModifyClientViewController.client = clientSelect;
 
-                        throwNewModifyWindows();
+                        throwNewModifyWindows(clientSelect);
 
                     }
                 }
+            }
+        });
+
+        btnSearch.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent arg0) {
+                refreshTable(txtName.getText());
+                LOGGER.error("Actualizando lista clientes");
             }
         });
 
@@ -100,9 +108,17 @@ public class ClientListViewController {
         }
     }
 
-    @FXML
-    private void clickBtnSearch() {
-
+    public void refreshTable(String name) {
+        try {
+            clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().searchByName(name));
+            clientObservableList = FXCollections.observableArrayList(clients);
+            tableClient.setItems(clientObservableList);
+        } catch (DatabaseException e) {
+            LOGGER.error("error al obtener los clientes");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -139,11 +155,12 @@ public class ClientListViewController {
             io.printStackTrace();
         }
     }
-    private void throwNewModifyWindows() {
+    private void throwNewModifyWindows(Client cli) {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ModifyClientView" + ".fxml"));
         try {
             Scene scene = new Scene(fxmlLoader.load(), 791, 615);
             Stage stage = (Stage) tableClient.getScene().getWindow();
+            stage.setTitle("INFORMACIÓN SOBRE " + cli.getName());
             stage.setResizable(false);
             stage.setScene(scene);
         } catch (IOException io) {

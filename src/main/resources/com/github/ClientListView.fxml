@@ -25,7 +25,7 @@
                 <TableColumn fx:id="colID" prefWidth="75.0" text="DNI" />
                 <TableColumn fx:id="colName" prefWidth="97.0" text="Nombre" />
                   <TableColumn fx:id="colCountry" prefWidth="111.0" text="País" />
-                  <TableColumn fx:id="colCreatedAt" prefWidth="118.0" text="Fecha Creación" />
+                  <TableColumn fx:id="colCreatedAt" prefWidth="199.0" text="Fecha Creación" />
               </columns>
             </TableView>
          </children>
@@ -35,7 +35,7 @@
       </HBox>
       <HBox alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="541.0" prefHeight="40.0" prefWidth="541.0">
          <children>
-            <Label text="Nom">
+            <Label text="Nombre">
                <padding>
                   <Insets bottom="15.0" right="15.0" top="15.0" />
                </padding>
@@ -43,17 +43,17 @@
                   <Insets right="10.0" />
                </HBox.margin>
             </Label>
-            <TextField fx:id="txtNom">
+            <TextField fx:id="txtName">
                <HBox.margin>
                   <Insets right="10.0" />
                </HBox.margin>
             </TextField>
-            <Button fx:id="btnSearch" mnemonicParsing="false" onMouseClicked="#clickBtnSearch" text="Buscar">
+            <Button fx:id="btnSearch" mnemonicParsing="false" text="Buscar">
                <HBox.margin>
                   <Insets left="20.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnRefreshTable" mnemonicParsing="false" onMouseClicked="#clickBtnSearch" text="Actualizar">
+            <Button fx:id="btnRefreshTable" mnemonicParsing="false" text="Mostrar Todos">
                <HBox.margin>
                   <Insets left="25.0" />
                </HBox.margin>
@@ -65,12 +65,12 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="68.0" prefWidth="506.0" GridPane.rowIndex="2">
          <children>
-            <Button fx:id="btnCreateClient" mnemonicParsing="false" onMouseClicked="#clickBtnCreateClient" text="Crear Client">
+            <Button fx:id="btnCreateClient" mnemonicParsing="false" onMouseClicked="#clickBtnCreateClient" text="Crear Cliente">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="btnCreateVideoGame" mnemonicParsing="false" onMouseClicked="#clickBtnCreateVideoGame" text="Crear Video Game">
+            <Button fx:id="btnCreateVideoGame" mnemonicParsing="false" onMouseClicked="#clickBtnCreateVideoGame" text="Crear Videojuego">
                <HBox.margin>
                   <Insets left="15.0" />
                </HBox.margin>

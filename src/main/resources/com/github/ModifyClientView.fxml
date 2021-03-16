@@ -41,7 +41,7 @@
          <children>
             <VBox prefHeight="25.0" prefWidth="389.0">
                <children>
-                  <Label text="Client Info">
+                  <Label text="Información Cliente">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -63,7 +63,7 @@
                               <Insets bottom="10.0" />
                            </VBox.margin>
                         </Label>
-                        <Label text="ID">
+                        <Label text="DNI">
                            <padding>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </padding>
@@ -115,7 +115,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
                <children>
-                  <Button fx:id="btnRemove" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Borrar Video Game">
+                  <Button fx:id="btnRemove" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Borrar Videojuego">
                      <HBox.margin>
                         <Insets top="13.0" />
                      </HBox.margin>
@@ -145,7 +145,7 @@
          <children>
             <VBox prefHeight="21.0" prefWidth="384.0">
                <children>
-                  <Label text="Game Search">
+                  <Label text="Buscar Videojuego">
                      <font>
                         <Font size="19.0" />
                      </font>
@@ -233,7 +233,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
                <children>
-                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar Filtro" />
+                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Filtrar" />
                   <Button fx:id="btnFindAll" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar Todos">
                      <HBox.margin>
                         <Insets left="25.0" />

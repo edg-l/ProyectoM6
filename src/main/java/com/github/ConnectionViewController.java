@@ -147,7 +147,7 @@ public class ConnectionViewController {
         try {
             scene = new Scene(fxmlLoader.load(), 535, 656);
             Stage stage = (Stage) btnLogin.getScene().getWindow();
-            stage.setTitle("Clients List");
+            stage.setTitle("Lista de Clientes");
             stage.setResizable(false);
             stage.setScene(scene);
         } catch (IOException io) {
