@@ -21,9 +21,11 @@ import java.util.*;
 public class ClientJDBCDAO implements ClientDAO {
     private static final Logger LOGGER = Logger.getLogger(ClientJDBCDAO.class);
     private final Connection connection;
+    private VideogameJDBCDAO videogameJDBCDAO;
 
-    public ClientJDBCDAO(ConexioJDBC connection) {
+    public ClientJDBCDAO(ConexioJDBC connection, VideogameJDBCDAO videogameJDBCDAO) {
         this.connection = connection.getConnection();
+        this.videogameJDBCDAO = videogameJDBCDAO;
     }
 
     private Client fromResultSet(ResultSet resultSet) throws SQLException {
@@ -101,6 +103,7 @@ public class ClientJDBCDAO implements ClientDAO {
 
             if (resultSet.next()) {
                 client = fromResultSet(resultSet);
+                client.getVideogames().addAll(videogameJDBCDAO.getByClientID(client.getId()));
             }
 
         } catch (SQLException throwables) {
@@ -125,7 +128,9 @@ public class ClientJDBCDAO implements ClientDAO {
             ResultSet resultSet = stmt.executeQuery();
 
             while (resultSet.next()) {
-                clients.add(fromResultSet(resultSet));
+                Client client = fromResultSet(resultSet);
+                client.getVideogames().addAll(videogameJDBCDAO.getByClientID(client.getId()));
+                clients.add(client);
             }
 
         } catch (SQLException throwables) {

@@ -9,8 +9,8 @@ public class GestorPersistenciaJDBC implements GestorPersistencia {
     private VideogameJDBCDAO videogameRepo;
 
     public GestorPersistenciaJDBC(ConexioJDBC conexioJDBC) {
-        clientRepo = new ClientJDBCDAO(conexioJDBC);
         videogameRepo = new VideogameJDBCDAO(conexioJDBC);
+        clientRepo = new ClientJDBCDAO(conexioJDBC, videogameRepo);
     }
 
     @Override

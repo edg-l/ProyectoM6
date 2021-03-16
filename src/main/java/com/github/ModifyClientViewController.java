@@ -197,7 +197,7 @@ public class ModifyClientViewController {
             public void handle(MouseEvent event) {
                 if (tableClient.getSelectionModel().getSelectedItem() != null) {
                     Videogame videogameSelected = client.getVideogames().get(tableClient.getSelectionModel().getSelectedIndex());
-                    LOGGER.error("videogame seleccionado" + videogameSelected.toString());
+                    LOGGER.debug("videogame seleccionado" + videogameSelected.toString());
 
                     /**falta añadir objeto bbdd*/
                     /** lo haremos con un botón de guardar cambios **/
@@ -223,10 +223,12 @@ public class ModifyClientViewController {
                     App.gestorPersistencia.getClientDAO().update(client);
                 } catch (DatabaseException e) {
                     //txtError.setText("Error interno de la base de datos.");
+                    LOGGER.error("error interno base datos");
                     LOGGER.error(e);
                     LOGGER.error(e.getCause());
                 } catch (NotFoundException e) {
                     //txtError.setText("Error interno de la base de datos.");
+                    LOGGER.error("error datos no encontrados");
                     LOGGER.error(e);
                     LOGGER.error(e.getCause());
                 }
@@ -252,7 +254,7 @@ public class ModifyClientViewController {
                 if (event.getClickCount() > 1) {
                     if (tableGame.getSelectionModel().getSelectedItem() != null) {
                         Videogame videogameSelected = videogames.get(tableGame.getSelectionModel().getSelectedIndex());
-                        LOGGER.error("videogame seleccionado" + videogameSelected.toString());
+                        LOGGER.debug("videogame seleccionado" + videogameSelected.toString());
 
                         /**falta añadir objeto bbdd*/
                         /** lo haremos con un botón de guardar cambios **/

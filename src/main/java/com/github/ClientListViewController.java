@@ -59,7 +59,7 @@ public class ClientListViewController {
                 if (event.getClickCount() > 1) {
                     if (tableClient.getSelectionModel().getSelectedItem() != null) {
                         Client clientSelect = clients.get(tableClient.getSelectionModel().getSelectedIndex());
-                        LOGGER.error("client seleccionado" + clientSelect.toString());
+                        LOGGER.debug("client seleccionado" + clientSelect.toString());
                         ModifyClientViewController.client = clientSelect;
 
                         throwNewModifyWindows();

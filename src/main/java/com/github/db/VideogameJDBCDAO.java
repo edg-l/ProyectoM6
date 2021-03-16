@@ -142,6 +142,34 @@ public class VideogameJDBCDAO implements VideogameDAO {
         }
     }
 
+    /**
+     * Obtener videogames que tenga el client id.
+     * Metodo especifico para JDBC.
+     * @param clientID
+     */
+    public Collection<Videogame> getByClientID(int clientID) throws DatabaseException {
+        LOGGER.debug("Buscando videogames por client id: " + clientID);
+
+        List<Videogame> videogames = new ArrayList<>();
+
+        try(PreparedStatement stmt = connection.prepareStatement(
+                "select v.* from videogame v " +
+                        "inner join client_videogames cv on cv.client_id = ?"
+        )) {
+            stmt.setInt(1, clientID);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                videogames.add(fromResultSet(resultSet));
+            }
+
+        } catch (SQLException throwables) {
+            throw new DatabaseException("error al obtener todos los videogames por client id", throwables);
+        }
+
+        return videogames;
+    }
+
     @Override
     public void update(Videogame object) throws DatabaseException {
         LOGGER.debug("Actualizando videogame: " + object.getId());
@@ -162,7 +190,7 @@ public class VideogameJDBCDAO implements VideogameDAO {
 
     @Override
     public Collection<Videogame> getByName(String name) throws DatabaseException {
-        LOGGER.debug("Buscando clientes por nombre: " + name);
+        LOGGER.debug("Buscando videogame por nombre: " + name);
 
         List<Videogame> videogames = new ArrayList<>();
 
@@ -185,7 +213,7 @@ public class VideogameJDBCDAO implements VideogameDAO {
 
     @Override
     public Collection<Videogame> getByPlatform(Platform platform) throws DatabaseException {
-        LOGGER.debug("Buscando clientes por plataforma: " + platform.toString());
+        LOGGER.debug("Buscando videogame por plataforma: " + platform.toString());
 
         List<Videogame> videogames = new ArrayList<>();
 
