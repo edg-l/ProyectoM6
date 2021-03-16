@@ -88,7 +88,7 @@ public class ClientListViewController {
             @Override
             public void handle(MouseEvent arg0) {
                 refreshTable();
-                LOGGER.error("Actualizando lista clientes");
+                LOGGER.debug("Actualizando lista clientes");
             }
         });
 
