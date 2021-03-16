@@ -187,65 +187,23 @@ public class ClientJDBCDAO implements ClientDAO {
             throw new DatabaseException("error al actualizar cliente con id " + client.getId(), throwables);
         }
 
-        HashSet<Integer> currentIDs = new HashSet<>();
-
-        // Obtener las ids de videojuegos actual.
         try (PreparedStatement stmt = connection.prepareStatement(
-                "select videogame_id from client_videogames where client_id = ?"
+                "delete from client_videogames where client_id = ?"
         )) {
             stmt.setInt(1, client.getId());
-            ResultSet resultSet = stmt.executeQuery();
-            if(resultSet.next()) {
-                currentIDs.add(resultSet.getInt("videogame_id"));
-            }
+            stmt.execute();
+            connection.commit();
         } catch (SQLException throwables) {
             throw new DatabaseException("error al obtener videogame_id s del cliente " + client.getId(), throwables);
         }
 
-        HashSet<Integer> updatedIDs = new HashSet<>();
-
-        for(Videogame videogame: client.getVideogames()) {
-            updatedIDs.add(videogame.getId());
-        }
-
-        HashSet<Integer> idsToRemove = (HashSet<Integer>) currentIDs.clone();
-        idsToRemove.removeAll(updatedIDs);
-
-        HashSet<Integer> idsToAdd = (HashSet<Integer>) updatedIDs.clone();
-        idsToAdd.removeAll(currentIDs);
-
-        LOGGER.debug("ids en base de datos: " + currentIDs);
-        LOGGER.debug("ids en el objecto: " + updatedIDs);
-        LOGGER.debug("ids a quitar: " + idsToRemove);
-        LOGGER.debug("ids a añadir: " + idsToAdd);
-
-        // Borrar ids que ya no estan en client.
-        try (PreparedStatement stmt = connection.prepareStatement(
-                "delete from client_videogames where client_id = ? and videogame_id = ?"
-        )) {
-            Iterator<Integer> it = idsToRemove.iterator();
-            while (it.hasNext()) {
-                Integer id = it.next();
-                stmt.setInt(1, client.getId());
-                stmt.setInt(2, id);
-                stmt.addBatch();
-            }
-            stmt.executeBatch();
-            connection.commit();
-
-        } catch (SQLException throwables) {
-            throw new DatabaseException("error al borrar videojueges al cliente " + client.getId(), throwables);
-        }
-
-        // Añadir nuevas ids que no estan en client.
+        // Añadir ids  en client.
         try (PreparedStatement stmt = connection.prepareStatement(
                 "insert into client_videogames (client_id, videogame_id) values (?,?)"
         )) {
-            Iterator<Integer> it = idsToAdd.iterator();
-            while (it.hasNext()) {
-                Integer id = it.next();
+            for(Videogame videogame: client.getVideogames()) {
                 stmt.setInt(1, client.getId());
-                stmt.setInt(2, id);
+                stmt.setInt(2, videogame.getId());
                 stmt.addBatch();
             }
             stmt.executeBatch();

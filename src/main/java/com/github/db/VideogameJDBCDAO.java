@@ -154,7 +154,7 @@ public class VideogameJDBCDAO implements VideogameDAO {
 
         try(PreparedStatement stmt = connection.prepareStatement(
                 "select v.* from videogame v " +
-                        "inner join client_videogames cv on cv.client_id = ?"
+                        "inner join client_videogames cv on cv.client_id = ? and cv.videogame_id = v.id"
         )) {
             stmt.setInt(1, clientID);
             ResultSet resultSet = stmt.executeQuery();

@@ -19,7 +19,6 @@ create table if not exists videogame (
 create table if not exists client_videogames (
     client_id int not null,
     videogame_id int not null,
-    primary key (client_id, videogame_id),
     foreign key (client_id) references client(id) on delete cascade,
     foreign key (videogame_id) references videogame(id) on delete cascade
 );
