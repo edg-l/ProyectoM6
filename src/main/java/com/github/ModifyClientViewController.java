@@ -128,7 +128,7 @@ public class ModifyClientViewController {
 
         choicePlatform.getSelectionModel().selectFirst();
 
-        LOGGER.error(client.getVideogames().size());
+        LOGGER.debug("Videogames Size" + client.getVideogames().size());
         txtNomClient.setText(client.getName());
         txtIDClient.setText(client.getId() + "");
 
@@ -166,7 +166,7 @@ public class ModifyClientViewController {
         colPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Date>("price"));
 
         refreshTableClient();
-        refreshTableGames(choicePlatform.getValue());
+        refreshTableGames();
 
         radioName.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -232,6 +232,8 @@ public class ModifyClientViewController {
                     LOGGER.error(e);
                     LOGGER.error(e.getCause());
                 }
+
+                LOGGER.debug("Videogames Size" + client.getVideogames().size());
 
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
                 Scene scene;
