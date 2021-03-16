@@ -55,7 +55,7 @@
                <children>
                   <VBox prefHeight="160.0" prefWidth="112.0">
                      <children>
-                        <Label text="Nom">
+                        <Label text="Nombre">
                            <padding>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </padding>
@@ -159,7 +159,7 @@
                <children>
                   <VBox prefHeight="160.0" prefWidth="112.0">
                      <children>
-                        <Label text="Nom">
+                        <Label text="Nombre">
                            <padding>
                               <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
                            </padding>
@@ -187,21 +187,43 @@
                   </VBox>
                   <VBox prefHeight="117.0" prefWidth="197.0">
                      <children>
-                        <TextField fx:id="txtNom1" alignment="TOP_LEFT">
+                        <TextField fx:id="txtNomGame" alignment="TOP_LEFT">
                            <VBox.margin>
                               <Insets bottom="10.0" right="10.0" />
                            </VBox.margin>
                         </TextField>
-                        <TextField fx:id="txtID1">
+                        <TextField fx:id="txtIDGame">
                            <VBox.margin>
                               <Insets bottom="10.0" right="10.0" />
                            </VBox.margin>
                         </TextField>
-                        <ChoiceBox prefHeight="25.0" prefWidth="194.0">
+                        <ChoiceBox fx:id="choicePlatform" prefHeight="25.0" prefWidth="194.0">
                            <VBox.margin>
                               <Insets right="10.0" />
                            </VBox.margin>
                         </ChoiceBox>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="95.0" prefWidth="42.0">
+                     <children>
+                        <RadioButton fx:id="radioName" mnemonicParsing="false">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="radioID" mnemonicParsing="false">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="radioPlatform" mnemonicParsing="false">
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </RadioButton>
                      </children>
                      <HBox.margin>
                         <Insets top="15.0" />
@@ -225,7 +247,7 @@
             <Insets top="35.0" />
          </padding>
       </VBox>
-      <Label text="Afegir Video Games">
+      <Label text="Añadir Video Games">
          <GridPane.margin>
             <Insets left="25.0" top="25.0" />
          </GridPane.margin>
@@ -236,6 +258,11 @@
       <HBox alignment="CENTER_RIGHT" prefHeight="37.0" prefWidth="384.0" GridPane.columnIndex="1">
          <children>
             <Button fx:id="btnSave" mnemonicParsing="false" text="Guardar cambios">
+               <HBox.margin>
+                  <Insets right="30.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnCancel" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Cancelar">
                <HBox.margin>
                   <Insets right="30.0" />
                </HBox.margin>

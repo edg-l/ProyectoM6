@@ -2,6 +2,8 @@ package com.github;
 
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.NotFoundException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -30,6 +32,12 @@ public class ModifyClientViewController {
     public static Client client;
 
     @FXML
+    private TextField txtNomGame;
+    @FXML
+    private TextField txt
+    @FXML
+    Button btnCancel;
+    @FXML
     Button btnSave;
     @FXML
     Button btnRemove;
@@ -41,7 +49,8 @@ public class ModifyClientViewController {
     RadioButton radioYes;
     @FXML
     RadioButton radioNo;
-
+    @FXML
+    private ChoiceBox<Platform> choicePlatform;
     @FXML
     private TableView<Videogame> tableClient;
     @FXML
@@ -63,6 +72,15 @@ public class ModifyClientViewController {
     private TableColumn colPlatform;
     @FXML
     private TableColumn colPrice;
+    @FXML
+    private RadioButton radioName;
+    @FXML
+    private RadioButton radioID;
+    @FXML
+    private RadioButton radioPlatform;
+
+    private final ToggleGroup group = new ToggleGroup();
+    private String selectedFilter = "";
 
     private List<Videogame> videogamesClient;
     public ObservableList<Videogame> videogamesClientObservableList;
@@ -72,10 +90,27 @@ public class ModifyClientViewController {
 
     @FXML
     private void clickBtnFind() {
+        if (choicePlatform.getValue() != null) {
+            refreshTableGames(choicePlatform.getValue());
+        } else {
+            refreshTableGames(null);
+        }
 
     }
+    private void clickRadio(String radio) {
+        if (radio.equals("radioName")) {
+            txtNomGame.disable();
+        } else if (radio.equals("radioID")) {
 
+        } else if (radio.equals("radioPlatform")) {
+
+        }
+    }
     public void initialize() {
+
+        for(Platform platform: Platform.values()) {
+            choicePlatform.getItems().add(platform);
+        }
 
         LOGGER.error(client.getVideogames().size());
         txtNomClient.setText(client.getName());
@@ -85,6 +120,19 @@ public class ModifyClientViewController {
         } else {
             radioNo.setSelected(true);
         }
+
+        radioID.setToggleGroup(group);
+        radioName.setToggleGroup(group);
+        radioPlatform.setToggleGroup(group);
+
+        group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+            @Override
+            public void changed(ObservableValue<? extends Toggle> ov, Toggle t, Toggle t1) {
+                RadioButton chk = (RadioButton) radioName.getToggleGroup().getSelectedToggle(); // Cast object to radio button
+                LOGGER.debug("Selected - " + chk.getText());
+                clickRadio(chk.getText());
+            }
+        });
 
         colIDclientgame.setCellValueFactory(new PropertyValueFactory<Videogame, Integer>("id"));
         colNameclientgame.setCellValueFactory(new PropertyValueFactory<Videogame, String>("name"));
@@ -97,8 +145,26 @@ public class ModifyClientViewController {
         colPrice.setCellValueFactory(new PropertyValueFactory<Videogame, Date>("price"));
 
         refreshTableClient();
-        refreshTableGames(null);
+        refreshTableGames(choicePlatform.getValue());
 
+        radioName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+        radioName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
+        radioName.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+            }
+        });
         btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -108,6 +174,29 @@ public class ModifyClientViewController {
 
                     refreshTableClient();
                 }
+            }
+        });
+
+        btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            public void handle(MouseEvent event) {
+                if (tableClient.getSelectionModel().getSelectedItem() != null) {
+                    Videogame videogameSelected = client.getVideogames().get(tableClient.getSelectionModel().getSelectedIndex());
+                    LOGGER.error("videogame seleccionado" + videogameSelected.toString());
+
+                    /**falta añadir objeto bbdd*/
+                    /** lo haremos con un botón de guardar cambios **/
+
+                    client.getVideogames().remove(videogameSelected);
+
+                    refreshTableClient();
+                }
+            }
+        });
+
+        btnCancel.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clientListWindow();
             }
         });
 
@@ -196,7 +285,20 @@ public class ModifyClientViewController {
         videogamesClient = client.getVideogames();
         videogamesClientObservableList = FXCollections.observableArrayList(videogamesClient);
         tableClient.setItems(videogamesClientObservableList);
+    }
 
+    private void clientListWindow() {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
+        Scene scene;
+        try {
+            scene = new Scene(fxmlLoader.load(), 535, 656);
+            Stage stage = (Stage) btnCancel.getScene().getWindow();
+            stage.setTitle("Clients List");
+            stage.setResizable(false);
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }
