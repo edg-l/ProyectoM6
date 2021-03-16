@@ -214,6 +214,11 @@ public class ClientJDBCDAO implements ClientDAO {
         HashSet<Integer> idsToAdd = (HashSet<Integer>) updatedIDs.clone();
         idsToAdd.removeAll(currentIDs);
 
+        LOGGER.debug("ids en base de datos: " + currentIDs);
+        LOGGER.debug("ids en el objecto: " + updatedIDs);
+        LOGGER.debug("ids a quitar: " + idsToRemove);
+        LOGGER.debug("ids a añadir: " + idsToAdd);
+
         // Borrar ids que ya no estan en client.
         try (PreparedStatement stmt = connection.prepareStatement(
                 "delete from client_videogames where client_id = ? and videogame_id = ?"
@@ -226,6 +231,7 @@ public class ClientJDBCDAO implements ClientDAO {
                 stmt.addBatch();
             }
             stmt.executeBatch();
+            connection.commit();
 
         } catch (SQLException throwables) {
             throw new DatabaseException("error al borrar videojueges al cliente " + client.getId(), throwables);
@@ -243,14 +249,9 @@ public class ClientJDBCDAO implements ClientDAO {
                 stmt.addBatch();
             }
             stmt.executeBatch();
+            connection.commit();
         } catch (SQLException throwables) {
             throw new DatabaseException("error al añadir nuevos videojuegos al cliente " + client.getId(), throwables);
-        }
-
-        try {
-            connection.commit();
-        } catch (SQLException e) {
-            throw new DatabaseException("error al actualizar cliente " + client.getId(), e);
         }
     }
 

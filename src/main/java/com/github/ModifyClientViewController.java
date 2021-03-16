@@ -181,17 +181,6 @@ public class ModifyClientViewController {
 
             }
         });
-        btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (tableClient.getSelectionModel().getSelectedItem() != null) {
-                    Videogame videogameSelected = videogamesClient.get(tableClient.getSelectionModel().getSelectedIndex());
-                    client.getVideogames().remove(videogameSelected);
-
-                    refreshTableClient();
-                }
-            }
-        });
 
         btnRemove.setOnMouseClicked(new EventHandler<MouseEvent>() {
             public void handle(MouseEvent event) {
