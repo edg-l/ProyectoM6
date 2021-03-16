@@ -1,6 +1,7 @@
 package com.github.db;
 
 import com.github.Client;
+import com.github.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
@@ -10,12 +11,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * La implementacion del cliente DAO para sql.
+ *
  * @author Edgar Luque
  */
 public class ClientJDBCDAO implements ClientDAO {
@@ -39,7 +39,7 @@ public class ClientJDBCDAO implements ClientDAO {
     @Override
     public void insert(Client client) throws DuplicatedException, DatabaseException {
         LOGGER.debug("Insertando cliente: " + client.getName());
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "insert into client (id, name, country, createdAt, isPartner) values (?,?,?,?,?)"
         )) {
             stmt.setInt(1, client.getId());
@@ -52,7 +52,7 @@ public class ClientJDBCDAO implements ClientDAO {
         } catch (SQLException throwables) {
             LOGGER.error("Error sql: " + throwables.getErrorCode());
             LOGGER.error("Error sql state: " + throwables.getSQLState());
-            if(throwables.getErrorCode() == 1062) {
+            if (throwables.getErrorCode() == 1062) {
                 throw new DuplicatedException(
                         String.format("error al insertar cliente con id %s, ya existe", client.getId()),
                         throwables
@@ -60,7 +60,30 @@ public class ClientJDBCDAO implements ClientDAO {
             } else {
                 throw new DatabaseException("error al insertar cliente con id " + client.getId(), throwables);
             }
+        }
 
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "insert into client_videogames (client_id, videogame_id) values (?,?)"
+        )) {
+            for (Videogame videogame : client.getVideogames()) {
+                stmt.setInt(1, client.getId());
+                stmt.setInt(2, client.getId());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+            connection.commit();
+        } catch (SQLException throwables) {
+            LOGGER.error("Error sql: " + throwables.getErrorCode());
+            LOGGER.error("Error sql state: " + throwables.getSQLState());
+            if (throwables.getErrorCode() == 1062) {
+                throw new DuplicatedException(
+                        String.format("error al insertar videogame al" +
+                                " cliente con id %s, ya existe", client.getId()),
+                        throwables
+                );
+            } else {
+                throw new DatabaseException("error al insertar videojuego al cliente con id " + client.getId(), throwables);
+            }
         }
     }
 
@@ -70,21 +93,21 @@ public class ClientJDBCDAO implements ClientDAO {
 
         Client client = null;
 
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "select * from client where id = ?"
         )) {
             stmt.setInt(1, id);
             ResultSet resultSet = stmt.executeQuery();
 
-            if(resultSet.next()) {
+            if (resultSet.next()) {
                 client = fromResultSet(resultSet);
             }
 
         } catch (SQLException throwables) {
-            throw new DatabaseException("error al obtener cliente con id " + id , throwables);
+            throw new DatabaseException("error al obtener cliente con id " + id, throwables);
         }
 
-        if(client == null)
+        if (client == null)
             throw new NotFoundException(String.format("el cliente con id %d no se ha encontrado", id));
 
         return client;
@@ -96,7 +119,7 @@ public class ClientJDBCDAO implements ClientDAO {
 
         List<Client> clients = new ArrayList<>();
 
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "select * from client"
         )) {
             ResultSet resultSet = stmt.executeQuery();
@@ -115,24 +138,24 @@ public class ClientJDBCDAO implements ClientDAO {
     @Override
     public void delete(Integer id) throws DatabaseException {
         LOGGER.debug("Borrando cliente con id " + id);
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "delete from client where id = ?"
         )) {
             stmt.setInt(1, id);
             stmt.execute();
             connection.commit();
         } catch (SQLException throwables) {
-            throw new DatabaseException("error al borrar cliente con id " + id , throwables);
+            throw new DatabaseException("error al borrar cliente con id " + id, throwables);
         }
     }
 
     @Override
     public void deleteAll(Iterable<Client> objects) throws DatabaseException {
         LOGGER.debug("Borrando lista de clientes");
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "delete from client where id = ?"
         )) {
-            for(Client client : objects) {
+            for (Client client : objects) {
                 stmt.setInt(1, client.getId());
                 stmt.addBatch();
             }
@@ -146,7 +169,7 @@ public class ClientJDBCDAO implements ClientDAO {
     @Override
     public void update(Client client) throws DatabaseException {
         LOGGER.debug("Actualizando cliente: " + client.getId());
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "update client set name=?, country=?, createdAt=?, isPartner=? where id = ?"
         )) {
             stmt.setString(1, client.getName());
@@ -155,9 +178,74 @@ public class ClientJDBCDAO implements ClientDAO {
             stmt.setBoolean(4, client.isPartner());
             stmt.setInt(5, client.getId());
             stmt.execute();
-            connection.commit();
         } catch (SQLException throwables) {
             throw new DatabaseException("error al actualizar cliente con id " + client.getId(), throwables);
+        }
+
+        HashSet<Integer> currentIDs = new HashSet<>();
+
+        // Obtener las ids de videojuegos actual.
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "select videogame_id from client_videogames where client_id = ?"
+        )) {
+            stmt.setInt(1, client.getId());
+            ResultSet resultSet = stmt.executeQuery();
+            if(resultSet.next()) {
+                currentIDs.add(resultSet.getInt("videogame_id"));
+            }
+        } catch (SQLException throwables) {
+            throw new DatabaseException("error al obtener videogame_id s del cliente " + client.getId(), throwables);
+        }
+
+        HashSet<Integer> updatedIDs = new HashSet<>();
+
+        for(Videogame videogame: client.getVideogames()) {
+            updatedIDs.add(videogame.getId());
+        }
+
+        HashSet<Integer> idsToRemove = (HashSet<Integer>) currentIDs.clone();
+        idsToRemove.removeAll(updatedIDs);
+
+        HashSet<Integer> idsToAdd = (HashSet<Integer>) updatedIDs.clone();
+        idsToAdd.removeAll(currentIDs);
+
+        // Borrar ids que ya no estan en client.
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "delete from client_videogames where client_id = ? and videogame_id = ?"
+        )) {
+            Iterator<Integer> it = idsToRemove.iterator();
+            while (it.hasNext()) {
+                Integer id = it.next();
+                stmt.setInt(1, client.getId());
+                stmt.setInt(2, id);
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+
+        } catch (SQLException throwables) {
+            throw new DatabaseException("error al borrar videojueges al cliente " + client.getId(), throwables);
+        }
+
+        // Añadir nuevas ids que no estan en client.
+        try (PreparedStatement stmt = connection.prepareStatement(
+                "insert into client_videogames (client_id, videogame_id) values (?,?)"
+        )) {
+            Iterator<Integer> it = idsToAdd.iterator();
+            while (it.hasNext()) {
+                Integer id = it.next();
+                stmt.setInt(1, client.getId());
+                stmt.setInt(2, id);
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+        } catch (SQLException throwables) {
+            throw new DatabaseException("error al añadir nuevos videojuegos al cliente " + client.getId(), throwables);
+        }
+
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            throw new DatabaseException("error al actualizar cliente " + client.getId(), e);
         }
     }
 
@@ -167,7 +255,7 @@ public class ClientJDBCDAO implements ClientDAO {
 
         List<Client> clients = new ArrayList<>();
 
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "select * from client where name like ?"
         )) {
             stmt.setString(1, "%" + nameQuery + "%");
@@ -190,7 +278,7 @@ public class ClientJDBCDAO implements ClientDAO {
 
         List<Client> clients = new ArrayList<>();
 
-        try(PreparedStatement stmt = connection.prepareStatement(
+        try (PreparedStatement stmt = connection.prepareStatement(
                 "select * from client where country like ?"
         )) {
             stmt.setString(1, "%" + country + "%");
