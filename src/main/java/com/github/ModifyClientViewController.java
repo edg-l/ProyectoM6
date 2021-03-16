@@ -90,10 +90,12 @@ public class ModifyClientViewController {
 
     @FXML
     private void clickBtnFind() {
-        if (choicePlatform.getValue() != null) {
+        if (radioPlatform.isSelected()) {
             refreshTableGames(choicePlatform.getValue());
-        } else {
-            refreshTableGames(null);
+        } else if (radioID.isSelected()) {
+            refreshTableGames(txtIDGame.getText());
+        } else if (radioName.isSelected()) {
+            refreshTableGames(txtNomGame.getText());
         }
 
     }
@@ -264,10 +266,7 @@ public class ModifyClientViewController {
         });
     }
 
-    public void refreshTableGames(Platform platform) {
-
-        if (platform == null) {
-
+    public void refreshTableGames() {
             try {
                 videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
                 videogamesObservableList = FXCollections.observableArrayList(videogames);
@@ -279,20 +278,54 @@ public class ModifyClientViewController {
                 LOGGER.error(e.getCause());
                 e.printStackTrace();
             }
-        } else {
-            try {
-                videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getByPlatform(platform));
-                videogamesObservableList = FXCollections.observableArrayList(videogames);
-                tableGame.setItems(videogamesObservableList);
+        }
+    public void refreshTableGames(Platform platform) {
 
-            } catch (DatabaseException e) {
-                LOGGER.error("error al obtener los videogames");
-                LOGGER.error(e);
-                LOGGER.error(e.getCause());
-                e.printStackTrace();
-            }
+        try {
+            videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getByPlatform(platform));
+            videogamesObservableList = FXCollections.observableArrayList(videogames);
+            tableGame.setItems(videogamesObservableList);
+
+        } catch (DatabaseException e) {
+            LOGGER.error("error al obtener los videogames");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+            e.printStackTrace();
         }
     }
+    public void refreshTableGames(int id) {
+
+        try {
+            Videogame newVi = App.gestorPersistencia.getVideogameDAO().getByID(id);
+            ArrayList<Videogame> newList = new ArrayList<Videogame>();
+            newList.add(newVi);
+            videogames = newList;
+            videogamesObservableList = FXCollections.observableArrayList(videogames);
+            tableGame.setItems(videogamesObservableList);
+
+        } catch (DatabaseException | NotFoundException e) {
+            LOGGER.error("error al obtener los videogames");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshTableGames(String name) {
+
+        try {
+            videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getByName(name));
+            videogamesObservableList = FXCollections.observableArrayList(videogames);
+            tableGame.setItems(videogamesObservableList);
+
+        } catch (DatabaseException e) {
+            LOGGER.error("error al obtener los videogames");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+            e.printStackTrace();
+        }
+    }
+
 
     public void refreshTableClient() {
 
