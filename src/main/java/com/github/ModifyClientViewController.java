@@ -120,7 +120,9 @@ public class ModifyClientViewController {
             choicePlatform.getItems().add(platform);
         }
 
-        LOGGER.debug("size videogames " + client.getVideogames().size());
+        choicePlatform.getSelectionModel().selectFirst();
+
+        LOGGER.error(client.getVideogames().size());
         txtNomClient.setText(client.getName());
         txtIDClient.setText(client.getId() + "");
         if (client.isPartner()) {
@@ -132,6 +134,10 @@ public class ModifyClientViewController {
         radioID.setToggleGroup(group);
         radioName.setToggleGroup(group);
         radioPlatform.setToggleGroup(group);
+
+        /** DEFAULT OPTION **/
+        radioPlatform.setSelected(true);
+        clickRadio("radioPlatform");
 
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
