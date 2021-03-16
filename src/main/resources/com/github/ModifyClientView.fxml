@@ -233,7 +233,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="37.0" prefWidth="384.0">
                <children>
-                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar" />
+                  <Button fx:id="btnAdd1" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar Filtro" />
+                  <Button fx:id="btnFindAll" mnemonicParsing="false" onMouseClicked="#clickBtnFind" text="Buscar Todos">
+                     <HBox.margin>
+                        <Insets left="25.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
                <VBox.margin>
                   <Insets top="25.0" />

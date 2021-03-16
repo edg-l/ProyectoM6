@@ -78,6 +78,8 @@ public class ModifyClientViewController {
     private RadioButton radioID;
     @FXML
     private RadioButton radioPlatform;
+    @FXML
+    private Button btnFindAll;
 
     private final ToggleGroup group = new ToggleGroup();
     private String selectedFilter = "";
@@ -99,6 +101,7 @@ public class ModifyClientViewController {
         }
 
     }
+
     private void clickRadio(String radio) {
         if (radio.equals("radioName")) {
             txtIDGame.setDisable(true);
@@ -116,9 +119,10 @@ public class ModifyClientViewController {
 
         }
     }
+
     public void initialize() {
 
-        for(Platform platform: Platform.values()) {
+        for (Platform platform : Platform.values()) {
             choicePlatform.getItems().add(platform);
         }
 
@@ -127,6 +131,7 @@ public class ModifyClientViewController {
         LOGGER.error(client.getVideogames().size());
         txtNomClient.setText(client.getName());
         txtIDClient.setText(client.getId() + "");
+
         if (client.isPartner()) {
             radioYes.setSelected(true);
         } else {
@@ -205,6 +210,12 @@ public class ModifyClientViewController {
             }
         });
 
+        btnFindAll.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                refreshTableGames();
+            }
+        });
         btnSave.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -258,18 +269,19 @@ public class ModifyClientViewController {
     }
 
     public void refreshTableGames() {
-            try {
-                videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
-                videogamesObservableList = FXCollections.observableArrayList(videogames);
-                tableGame.setItems(videogamesObservableList);
+        try {
+            videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
+            videogamesObservableList = FXCollections.observableArrayList(videogames);
+            tableGame.setItems(videogamesObservableList);
 
-            } catch (DatabaseException e) {
-                LOGGER.error("error al obtener los videogames");
-                LOGGER.error(e);
-                LOGGER.error(e.getCause());
-                e.printStackTrace();
-            }
+        } catch (DatabaseException e) {
+            LOGGER.error("error al obtener los videogames");
+            LOGGER.error(e);
+            LOGGER.error(e.getCause());
+            e.printStackTrace();
         }
+    }
+
     public void refreshTableGames(Platform platform) {
 
         try {
@@ -284,6 +296,7 @@ public class ModifyClientViewController {
             e.printStackTrace();
         }
     }
+
     public void refreshTableGames(int id) {
 
         try {
