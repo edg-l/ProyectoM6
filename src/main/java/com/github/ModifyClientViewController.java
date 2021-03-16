@@ -120,6 +120,8 @@ public class ModifyClientViewController {
             choicePlatform.getItems().add(platform);
         }
 
+        choicePlatform.getSelectionModel().selectFirst();
+
         LOGGER.error(client.getVideogames().size());
         txtNomClient.setText(client.getName());
         txtIDClient.setText(client.getId() + "");
@@ -132,6 +134,10 @@ public class ModifyClientViewController {
         radioID.setToggleGroup(group);
         radioName.setToggleGroup(group);
         radioPlatform.setToggleGroup(group);
+
+        /** DEFAULT OPTION **/
+        radioPlatform.setSelected(true);
+        clickRadio("radioPlatform");
 
         group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
             @Override
