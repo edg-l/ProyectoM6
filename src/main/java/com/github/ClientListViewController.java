@@ -1,7 +1,9 @@
 package com.github;
 
 import com.github.exceptions.DatabaseException;
+import javafx.collections.ArrayChangeListener;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -53,6 +55,11 @@ public class ClientListViewController {
 
         refreshTable();
 
+        /** OBSERVER ACTUALIZAR AUTOMATICO **/
+        clientObservableList.addListener((ListChangeListener<Client>) c ->{
+            refreshTable();
+        });
+
         tableClient.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -78,6 +85,7 @@ public class ClientListViewController {
         });
 
     }
+
 
     public void refreshTable() {
         try {
