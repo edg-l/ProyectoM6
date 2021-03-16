@@ -45,7 +45,7 @@ public class CreateGameViewController {
         Platform platform = Platform.PC;
 
         for (Platform platform1 : Platform.values()) {
-            if (platform1.toString().equals(choicePlatform.getValue())) {
+            if (platform1.equals(choicePlatform.getValue())) {
                 platform = platform1;
             }
         }
