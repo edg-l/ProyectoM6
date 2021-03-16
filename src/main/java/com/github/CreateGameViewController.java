@@ -42,13 +42,7 @@ public class CreateGameViewController {
 
         String name = txtNom.getText();
         int id = Integer.parseInt(txtID.getText());
-        Platform platform = Platform.PC;
-
-        for (Platform platform1 : Platform.values()) {
-            if (platform1.equals(choicePlatform.getValue())) {
-                platform = platform1;
-            }
-        }
+        Platform platform = choicePlatform.getValue();
 
         java.sql.Date date = java.sql.Date.valueOf(dateRelease.getValue());
         int preu = Integer.parseInt(txtPreu.getText());
