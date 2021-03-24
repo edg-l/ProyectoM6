@@ -203,8 +203,6 @@ public class ModifyClientViewController {
                     client.getVideogames().remove(videogameSelected);
 
                     refreshTableClient();
-
-
             }
         });
 

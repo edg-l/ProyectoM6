@@ -86,18 +86,24 @@ public class CreateClientViewController {
 
     @FXML
     private void clickBtnAdd() {
-        Client client = new Client(
-                Integer.parseInt(txtID.getText()),
-                txtNom.getText(),
-                txtPais.getText(),
-                new Date(System.currentTimeMillis()),
-                esSoci
-        );
-
         try {
+            if(txtNom.getText().isBlank()) {
+                txtError.setText("El nombre no puede estar vacío.");
+                return;
+            }
+            Client client = new Client(
+                    Integer.parseInt(txtID.getText()),
+                    txtNom.getText(),
+                    txtPais.getText(),
+                    new Date(System.currentTimeMillis()),
+                    esSoci
+            );
+
             App.gestorPersistencia.getClientDAO().insert(client);
             ClientListViewController.stageCreate.close();
             ClientListViewController.stageCreate = null;
+        } catch (NumberFormatException e) {
+            txtError.setText("El DNI no puede estar vacio y debe ser un numero.");
         } catch (DuplicatedException e) {
             LOGGER.debug(e);
             txtError.setText("Ya existe un cliente con este DNI.");
