@@ -39,17 +39,28 @@ public class CreateGameViewController {
 
     @FXML
     private void clickBtnAdd() {
-
-        String name = txtNom.getText();
-        int id = Integer.parseInt(txtID.getText());
-        Platform platform = choicePlatform.getValue();
-
-        java.sql.Date date = java.sql.Date.valueOf(dateRelease.getValue());
-        int preu = Integer.parseInt(txtPreu.getText());
-
-        Videogame newVideoGame = new Videogame(id, name, platform, date, preu);
-
         try {
+            String name = txtNom.getText();
+
+            if(txtID.getText().isBlank()) {
+                txtError.setText("La ID no puede estar vacia.");
+                return;
+            }
+
+            int id = Integer.parseInt(txtID.getText());
+            Platform platform = choicePlatform.getValue();
+
+            java.sql.Date date = java.sql.Date.valueOf(dateRelease.getValue());
+
+            if(txtPreu.getText().isBlank()) {
+                txtError.setText("El precio no puede estar vacio.");
+                return;
+            }
+
+            int preu = Integer.parseInt(txtPreu.getText());
+
+            Videogame newVideoGame = new Videogame(id, name, platform, date, preu);
+
             App.gestorPersistencia.getVideogameDAO().insert(newVideoGame);
             ClientListViewController.stageCreate.close();
             ClientListViewController.stageCreate = null;
@@ -60,6 +71,8 @@ public class CreateGameViewController {
             txtError.setText("Error interno de la base de datos.");
             LOGGER.error(e);
             LOGGER.error(e.getCause());
+        } catch (NumberFormatException e) {
+            txtError.setText("La ID no puede estar vacia y debe ser un numero.");
         }
     }
 
