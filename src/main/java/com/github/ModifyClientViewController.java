@@ -1,6 +1,7 @@
 package com.github;
 
 import com.github.exceptions.DatabaseException;
+import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -234,6 +235,8 @@ public class ModifyClientViewController {
                     LOGGER.error("error datos no encontrados");
                     LOGGER.error(e);
                     LOGGER.error(e.getCause());
+                } catch (DuplicatedException e) {
+                    e.printStackTrace();
                 }
 
                 LOGGER.debug("Videogames Size" + client.getVideogames().size());

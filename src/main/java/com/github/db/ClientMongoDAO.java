@@ -43,21 +43,30 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public void insert(Client cli) throws DatabaseException {
+    public void insert(Client cli) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + cli.getName());
 
+        /*
         try {
             Client checkID = this.getByID(cli.getId());
             if (checkID == null) {
                 Document newClient = clientToDocument(cli);
                 collection.insertOne(newClient);
-            } /*else {
-               throw new NotFoundException("error al insertar cliente con id " + cli.getId() + " ya existe");
+            } else {
+               throw new DuplicatedException("error al insertar cliente con id " + cli.getId() + " ya existe");
                 // TIENE QUE SER NOTFOUND PORQUE NO HAY CODIGO DE ERROR
                 //NO PUEDE SER NI DATABASEEXCEPTION NI ERROREXCEPTION
-            }*/
-        } catch (MongoException | NotFoundException throwables) {
+            }
+        } catch (MongoException throwables) {
             throw new DatabaseException("error al insertar cliente con id " + cli.getId(), throwables);
+        }
+        */
+        try {
+            this.getByID(cli.getId());
+            throw new DuplicatedException("el cliente con id " + cli.getId() + " ya existe");
+        } catch (NotFoundException e) {
+            Document newClient = clientToDocument(cli);
+            collection.insertOne(newClient);
         }
 
     }
@@ -133,9 +142,9 @@ public class ClientMongoDAO implements ClientDAO {
             if (cursor.hasNext()) {
                 Document d = cursor.next();
                 client = documentToClient(d);
-            } /*else {
+            } else {
                 throw new NotFoundException(String.format("el cliente con id %d no se ha encontrado", id));
-            }*/
+            }
         } catch (MongoException e) {
             throw new DatabaseException("error al obtener cliente con id " + id, e);
         }
@@ -189,21 +198,17 @@ public class ClientMongoDAO implements ClientDAO {
     public void update(Client object) throws DatabaseException, NotFoundException {
         LOGGER.debug("Buscando cliente:");
 
-        Document clientBBDD = null;
-        MongoCursor<Document> cursor = collection.find(Filters.eq("id", object.getId())).iterator();
-
-        if (cursor.hasNext()) {
-            clientBBDD = cursor.next();
-        }
-
-        LOGGER.debug("Update cliente:");
-        if (clientBBDD != null) {
-            Client oldCliend = documentToClient(clientBBDD);
+        try {
+            Client oldCliend = this.getByID(object.getId());
             this.delete(oldCliend.getId());
-            this.insert(object);
-        } else {
-            this.insert(object);
+        } finally {
+            try {
+                this.insert(object);
+            } catch (DuplicatedException e) {
+                e.printStackTrace();
+            }
         }
+        LOGGER.debug("Update cliente:");
     }
 
     @Override

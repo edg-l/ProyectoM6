@@ -36,7 +36,7 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public void insert(Videogame vi) throws DatabaseException {
+    public void insert(Videogame vi) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + vi.getName());
 
         try {
@@ -45,7 +45,7 @@ public class VideogameMongoDAO implements VideogameDAO {
                 Document newVi = gameToDocument(vi);
                 collection.insertOne(newVi);
             } else {
-                throw new NotFoundException("error al insertar videogame con id " + vi.getId() + " ya existe");
+                throw new DuplicatedException("error al insertar videogame con id " + vi.getId() + " ya existe");
                 // TIENE QUE SER NOTFOUND PORQUE NO HAY CODIGO DE ERROR
                 //NO PUEDE SER NI DATABASEEXCEPTION NI ERROREXCEPTION
             }
@@ -148,7 +148,7 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
     @Override
-    public void update(Videogame object) throws DatabaseException, NotFoundException {
+    public void update(Videogame object) throws DatabaseException, NotFoundException, DuplicatedException {
         LOGGER.debug("Buscando videogame:");
 
         Document videogameBBDD = null;

@@ -32,7 +32,7 @@ public class CreateGameViewController {
     private ChoiceBox<Platform> choicePlatform;
 
     public void initialize() {
-        for(Platform platform: Platform.values()) {
+        for (Platform platform : Platform.values()) {
             choicePlatform.getItems().add(platform);
         }
     }
@@ -42,7 +42,7 @@ public class CreateGameViewController {
         try {
             String name = txtNom.getText();
 
-            if(txtID.getText().isBlank()) {
+            if (txtID.getText().isBlank()) {
                 txtError.setText("La ID no puede estar vacia.");
                 return;
             }
@@ -50,9 +50,13 @@ public class CreateGameViewController {
             int id = Integer.parseInt(txtID.getText());
             Platform platform = choicePlatform.getValue();
 
+            if (dateRelease.getValue() == null) {
+                txtError.setText("La data no puede estar vacia.");
+                return;
+            }
             java.sql.Date date = java.sql.Date.valueOf(dateRelease.getValue());
 
-            if(txtPreu.getText().isBlank()) {
+            if (txtPreu.getText().isBlank()) {
                 txtError.setText("El precio no puede estar vacio.");
                 return;
             }
@@ -66,7 +70,7 @@ public class CreateGameViewController {
             ClientListViewController.stageCreate = null;
         } catch (DuplicatedException e) {
             LOGGER.debug(e);
-            txtError.setText("Ya existe un videogame con este ID.");
+            txtError.setText("Ya existe un cliente con este ID.");
         } catch (DatabaseException e) {
             txtError.setText("Error interno de la base de datos.");
             LOGGER.error(e);

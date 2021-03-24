@@ -101,7 +101,7 @@ public class ConnectionViewController {
 
 
                 switch (selectedBBDD) {
-                    case "BBDD SQL":
+                    case "MySQL":
                         try {
                             labelError.setTextFill(Color.GREEN);
                             labelError.setText("Connecting...");
@@ -117,7 +117,7 @@ public class ConnectionViewController {
                         }
 
                         break;
-                    case "BBDD NO-SQL":
+                    case "MongoDB":
 
                         try {
                             labelError.setTextFill(Color.GREEN);

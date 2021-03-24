@@ -50,5 +50,5 @@ public interface DAO<T, S> {
      * Actualiza el objecto.
      * @param object El objeto a actualizar.
      */
-    void update(T object) throws DatabaseException, NotFoundException;
+    void update(T object) throws DatabaseException, NotFoundException, DuplicatedException;
 }
