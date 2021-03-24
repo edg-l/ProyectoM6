@@ -28,6 +28,12 @@ public class ClientJDBCDAO implements ClientDAO {
         this.videogameJDBCDAO = videogameJDBCDAO;
     }
 
+    /**
+     * Convierte un ResultSet a un Client
+     * @param resultSet El resultset
+     * @return El cliente
+     * @throws SQLException
+     */
     private Client fromResultSet(ResultSet resultSet) throws SQLException {
         return new Client(
                 resultSet.getInt("id"),
