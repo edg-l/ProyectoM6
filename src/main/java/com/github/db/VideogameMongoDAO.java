@@ -40,17 +40,11 @@ public class VideogameMongoDAO implements VideogameDAO {
         LOGGER.debug("Insertando cliente: " + vi.getName());
 
         try {
-            Videogame checkID = this.getByID(vi.getId());
-            if (checkID == null) {
-                Document newVi = gameToDocument(vi);
-                collection.insertOne(newVi);
-            } else {
-                throw new DuplicatedException("error al insertar videogame con id " + vi.getId() + " ya existe");
-                // TIENE QUE SER NOTFOUND PORQUE NO HAY CODIGO DE ERROR
-                //NO PUEDE SER NI DATABASEEXCEPTION NI ERROREXCEPTION
-            }
-        } catch (MongoException | NotFoundException throwables) {
-            throw new DatabaseException("error al insertar cliente con id " + vi.getId(), throwables);
+            this.getByID(vi.getId());
+            throw new DuplicatedException("el videoga,e con id " + vi.getId() + " ya existe");
+        } catch (NotFoundException e) {
+            Document newClient = gameToDocument(vi);
+            collection.insertOne(newClient);
         }
     }
 
