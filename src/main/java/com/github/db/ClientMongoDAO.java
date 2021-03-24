@@ -51,11 +51,11 @@ public class ClientMongoDAO implements ClientDAO {
             if (checkID == null) {
                 Document newClient = clientToDocument(cli);
                 collection.insertOne(newClient);
-            } else {
-                throw new NotFoundException("error al insertar cliente con id " + cli.getId() + " ya existe");
+            } /*else {
+               throw new NotFoundException("error al insertar cliente con id " + cli.getId() + " ya existe");
                 // TIENE QUE SER NOTFOUND PORQUE NO HAY CODIGO DE ERROR
                 //NO PUEDE SER NI DATABASEEXCEPTION NI ERROREXCEPTION
-            }
+            }*/
         } catch (MongoException | NotFoundException throwables) {
             throw new DatabaseException("error al insertar cliente con id " + cli.getId(), throwables);
         }
@@ -76,6 +76,8 @@ public class ClientMongoDAO implements ClientDAO {
             for (Videogame vi : cli.getVideogames()) {
                 Document newVi = new Document();
                 newVi.append("id", vi.getId());
+                videogamesList.add(newVi);
+                LOGGER.debug("añadiendo videojuego " + vi.getId());
             }
 
             newClient.append("videogames", videogamesList);
@@ -89,7 +91,7 @@ public class ClientMongoDAO implements ClientDAO {
         int id = cli.getInteger("id");
         String name = cli.getString("name");
         String country = cli.getString("country");
-        Date createAt = (Date) cli.getDate("createAt");
+        Date createAt = new java.sql.Date(cli.getDate("createAt").getTime());
         Boolean isPartner = cli.getBoolean("isPartner");
 
         Client newClient = new Client(id, name, country, createAt, isPartner);
@@ -104,13 +106,15 @@ public class ClientMongoDAO implements ClientDAO {
 
                 Videogame viDatabase = videogameMongoDAO.getByID(id);
 
+                /*
                 Videogame newVi = new Videogame(id,
                         viDatabase.getName(),
                         viDatabase.getPlatform(),
                         viDatabase.getReleaseDate(),
-                        viDatabase.getPrice());
+                        viDatabase.getPrice());*/
 
-                newClient.getVideogames().add(newVi);
+                LOGGER.debug("cargando videojuego " + viDatabase.getId());
+                newClient.getVideogames().add(viDatabase);
             }
         }
 
@@ -129,9 +133,9 @@ public class ClientMongoDAO implements ClientDAO {
             if (cursor.hasNext()) {
                 Document d = cursor.next();
                 client = documentToClient(d);
-            } else {
+            } /*else {
                 throw new NotFoundException(String.format("el cliente con id %d no se ha encontrado", id));
-            }
+            }*/
         } catch (MongoException e) {
             throw new DatabaseException("error al obtener cliente con id " + id, e);
         }
@@ -146,14 +150,14 @@ public class ClientMongoDAO implements ClientDAO {
 
         try {
             MongoCursor<Document> cursor = collection.find().iterator();
-            if (cursor.hasNext()) {
+            while (cursor.hasNext()) {
                 Document d = cursor.next();
                 clients.add(documentToClient(d));
             }
         } catch (MongoException | NotFoundException throwables) {
             throw new DatabaseException("error al obtener todos los clientes", throwables);
         }
-
+        clients.sort(Client::compareTo);
         return clients;
     }
 
@@ -182,7 +186,7 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     @Override
-    public void update(Client object) throws DatabaseException {
+    public void update(Client object) throws DatabaseException, NotFoundException {
         LOGGER.debug("Buscando cliente:");
 
         Document clientBBDD = null;
@@ -194,8 +198,9 @@ public class ClientMongoDAO implements ClientDAO {
 
         LOGGER.debug("Update cliente:");
         if (clientBBDD != null) {
-            Document client = clientToDocument(object);
-            collection.updateOne(clientBBDD, client);
+            Client oldCliend = documentToClient(clientBBDD);
+            this.delete(oldCliend.getId());
+            this.insert(object);
         } else {
             this.insert(object);
         }
@@ -208,8 +213,8 @@ public class ClientMongoDAO implements ClientDAO {
         List<Client> clients = new ArrayList<>();
 
         try {
-            MongoCursor<Document> cursor = collection.find(Filters.eq("name", nameQuery)).iterator();
-            if (cursor.hasNext()) {
+            MongoCursor<Document> cursor = collection.find(Filters.regex("name", nameQuery)).iterator();
+            while (cursor.hasNext()) {
                 Document d = cursor.next();
                 clients.add(documentToClient(d));
             }
@@ -228,7 +233,7 @@ public class ClientMongoDAO implements ClientDAO {
 
         try {
             MongoCursor<Document> cursor = collection.find(Filters.eq("country", country)).iterator();
-            if (cursor.hasNext()) {
+            while (cursor.hasNext()) {
                 Document d = cursor.next();
                 clients.add(documentToClient(d));
             }
