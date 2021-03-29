@@ -151,8 +151,8 @@ public class ClientMongoDAO implements ClientDAO {
 
     /**
      *
-     * @param id get videogame By id
-     * @return Videogame object
+     * @param id get client By id
+     * @return Client object
      * @throws DatabaseException
      * @throws NotFoundException
      */
@@ -178,6 +178,12 @@ public class ClientMongoDAO implements ClientDAO {
         return client;
     }
 
+    /**
+     *
+     * Return collection of every Client in BD
+     * @return Client List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Client> getAll() throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes");
@@ -196,7 +202,12 @@ public class ClientMongoDAO implements ClientDAO {
         clients.sort(Client::compareTo);
         return clients;
     }
-
+    /**
+     * Delete Client by ID
+     * @param id La id del objeto
+     * @throws NotFoundException
+     * @throws DatabaseException
+     */
     @Override
     public void delete(Integer id) throws NotFoundException, DatabaseException {
         try {
@@ -221,6 +232,14 @@ public class ClientMongoDAO implements ClientDAO {
         }
     }
 
+    /**
+     *
+     * @param object update object by ID in BD.<br>
+     *               if not exist, just insert
+     * @throws DatabaseException
+     * @throws NotFoundException
+     * @throws DuplicatedException
+     */
     @Override
     public void update(Client object) throws DatabaseException, NotFoundException {
         LOGGER.debug("Buscando cliente:");
@@ -237,7 +256,12 @@ public class ClientMongoDAO implements ClientDAO {
         }
         LOGGER.debug("Update cliente:");
     }
-
+    /**
+     *
+     * @param nameQuery Filter by name.
+     * @return Client List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Client> searchByName(String nameQuery) throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes de nombre: " + nameQuery);
@@ -257,6 +281,12 @@ public class ClientMongoDAO implements ClientDAO {
         return clients;
     }
 
+    /**
+     *
+     * @param country Filter by country.
+     * @return Client List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Client> getByCountry(String country) throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes de país: " + country);
