@@ -207,8 +207,8 @@ public class ModifyClientViewController {
                 }
                     LOGGER.debug("videogame seleccionado" + videogameSelected.toString());
 
-                    /**falta añadir objeto bbdd*/
-                    /** lo haremos con un botón de guardar cambios **/
+                    /*falta añadir objeto bbdd*/
+                    /* lo haremos con un botón de guardar cambios */
 
                     client.getVideogames().remove(videogameSelected);
 
@@ -273,8 +273,8 @@ public class ModifyClientViewController {
                         Videogame videogameSelected = videogames.get(tableGame.getSelectionModel().getSelectedIndex());
                         LOGGER.debug("videogame seleccionado" + videogameSelected.toString());
 
-                        /**falta añadir objeto bbdd*/
-                        /** lo haremos con un botón de guardar cambios **/
+                        /*falta añadir objeto bbdd*/
+                        /* lo haremos con un botón de guardar cambios */
 
                         client.getVideogames().add(videogameSelected);
 
