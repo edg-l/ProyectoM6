@@ -41,7 +41,12 @@ public class ClientMongoDAO implements ClientDAO {
         this.collection = database.getCollection("clients");
         this.videogameMongoDAO = videogameMongoDAO;
     }
-
+    /**
+     *
+     * @param cli Object Client to BD insertion
+     * @throws DatabaseException
+     * @throws DuplicatedException
+     */
     @Override
     public void insert(Client cli) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + cli.getName());
@@ -71,6 +76,13 @@ public class ClientMongoDAO implements ClientDAO {
 
     }
 
+    /**
+     *
+     * @param cli Client Object to document
+     * @return Client Object
+     * @throws NotFoundException
+     */
+
     private Document clientToDocument(Client cli) {
 
         ArrayList<Document> videogamesList = new ArrayList<Document>();
@@ -94,6 +106,13 @@ public class ClientMongoDAO implements ClientDAO {
 
         return newClient;
     }
+
+    /**
+     *
+     * @param cli document to Object Client
+     * @return Client Object
+     * @throws NotFoundException
+     */
 
     private Client documentToClient(Document cli) throws NotFoundException, DatabaseException {
 
@@ -129,6 +148,14 @@ public class ClientMongoDAO implements ClientDAO {
 
         return newClient;
     }
+
+    /**
+     *
+     * @param id get videogame By id
+     * @return Videogame object
+     * @throws DatabaseException
+     * @throws NotFoundException
+     */
 
     @Override
     public Client getByID(Integer id) throws NotFoundException, DatabaseException {

@@ -91,6 +91,9 @@ public class ModifyClientViewController {
     private List<Videogame> videogames;
     public ObservableList<Videogame> videogamesObservableList;
 
+    /**
+     * check for radiobutton checked in filters options
+     */
     @FXML
     private void clickBtnFind() {
         if (radioPlatform.isSelected()) {
@@ -103,6 +106,9 @@ public class ModifyClientViewController {
 
     }
 
+    /**
+     * manage radiobutton group
+     */
     private void clickRadio(String radio) {
         if (radio.equals("radioName")) {
             txtIDGame.setDisable(true);
@@ -121,6 +127,9 @@ public class ModifyClientViewController {
         }
     }
 
+    /**
+     * Every default option and button event
+     */
     public void initialize() {
 
         for (Platform platform : Platform.values()) {
@@ -276,6 +285,9 @@ public class ModifyClientViewController {
         });
     }
 
+    /**
+     * refreshTableGames without filters
+     */
     public void refreshTableGames() {
         try {
             videogames = new ArrayList<>(App.gestorPersistencia.getVideogameDAO().getAll());
@@ -289,7 +301,9 @@ public class ModifyClientViewController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * refreshTableGames with filter platform
+     */
     public void refreshTableGames(Platform platform) {
 
         try {
@@ -305,6 +319,9 @@ public class ModifyClientViewController {
         }
     }
 
+    /**
+     * refreshTableGames with filter id
+     */
     public void refreshTableGames(int id) {
 
         try {
@@ -323,6 +340,9 @@ public class ModifyClientViewController {
         }
     }
 
+    /**
+     * refreshTableGames with filter name
+     */
     public void refreshTableGames(String name) {
 
         try {
@@ -338,14 +358,18 @@ public class ModifyClientViewController {
         }
     }
 
-
+    /**
+     * refreshTableClient without filter
+     */
     public void refreshTableClient() {
 
         videogamesClient = client.getVideogames();
         videogamesClientObservableList = FXCollections.observableArrayList(videogamesClient);
         tableClient.setItems(videogamesClientObservableList);
     }
-
+    /**
+     * Go back function calling ClientListView window
+     */
     private void clientListWindow() {
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));

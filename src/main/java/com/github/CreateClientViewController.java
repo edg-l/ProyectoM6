@@ -50,6 +50,10 @@ public class CreateClientViewController {
 
     private boolean esSoci = false;
 
+    /**
+     * Control textID to limit length characters and only numeric<br>
+     *
+     */
     public void initialize() {
         radSi.setToggleGroup(group);
         radNo.setToggleGroup(group);
@@ -84,6 +88,10 @@ public class CreateClientViewController {
         });
     }
 
+    /**
+     * Call for ClientDAO for add the new client<br>
+     * Add feedback information
+     */
     @FXML
     private void clickBtnAdd() {
         try {
@@ -114,6 +122,9 @@ public class CreateClientViewController {
         }
     }
 
+    /**
+     * Close the window
+     */
     @FXML
     private void clickBtnBack() {
         ClientListViewController.stageCreate.close();

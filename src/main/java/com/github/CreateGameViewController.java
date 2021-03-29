@@ -31,12 +31,19 @@ public class CreateGameViewController {
     @FXML
     private ChoiceBox<Platform> choicePlatform;
 
+    /**
+     * Adding available platforms to the choiceBox
+     */
     public void initialize() {
         for (Platform platform : Platform.values()) {
             choicePlatform.getItems().add(platform);
         }
     }
 
+    /**
+     * Validate the form and try to add to bd<br>
+     * Give feedback to user
+     */
     @FXML
     private void clickBtnAdd() {
         try {
@@ -80,6 +87,9 @@ public class CreateGameViewController {
         }
     }
 
+    /**
+     * close the windows
+     */
     @FXML
     private void clickBtnBack() {
         ClientListViewController.stageCreate.close();

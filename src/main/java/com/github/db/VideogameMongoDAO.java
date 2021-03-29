@@ -35,18 +35,32 @@ public class VideogameMongoDAO implements VideogameDAO {
         this.collection = database.getCollection("videogames");
     }
 
+
+    /**
+     *
+     * @param vi Object Videogame to BD insertion
+     * @throws DatabaseException
+     * @throws DuplicatedException
+     */
     @Override
     public void insert(Videogame vi) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + vi.getName());
 
         try {
             this.getByID(vi.getId());
-            throw new DuplicatedException("el videoga,e con id " + vi.getId() + " ya existe");
+            throw new DuplicatedException("el videogame con id " + vi.getId() + " ya existe");
         } catch (NotFoundException e) {
             Document newClient = gameToDocument(vi);
             collection.insertOne(newClient);
         }
     }
+
+    /**
+     *
+     * @param vi Videogame Object to document
+     * @return Videogame Object
+     * @throws NotFoundException
+     */
 
     public Document gameToDocument(Videogame vi) {
 
@@ -58,6 +72,13 @@ public class VideogameMongoDAO implements VideogameDAO {
 
         return newVi;
     }
+
+    /**
+     *
+     * @param vi document to Object Videogame
+     * @return Videogame Object
+     * @throws NotFoundException
+     */
 
     private Videogame documentToGame(Document vi) throws NotFoundException {
 
@@ -71,6 +92,14 @@ public class VideogameMongoDAO implements VideogameDAO {
 
         return newVi;
     }
+
+    /**
+     *
+     * @param id get videogame By id
+     * @return Videogame object
+     * @throws DatabaseException
+     * @throws NotFoundException
+     */
     @Override
     public Videogame getByID(Integer id) throws NotFoundException, DatabaseException {
 
@@ -97,6 +126,12 @@ public class VideogameMongoDAO implements VideogameDAO {
         return newVi;
     }
 
+    /**
+     *
+     * Return collection of every videogame in BD
+     * @return Videogame List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Videogame> getAll() throws DatabaseException {
 
@@ -117,6 +152,12 @@ public class VideogameMongoDAO implements VideogameDAO {
         return videogames;
     }
 
+    /**
+     * Delete videogame by ID
+     * @param id La id del objeto
+     * @throws NotFoundException
+     * @throws DatabaseException
+     */
     @Override
     public void delete(Integer id) throws NotFoundException, DatabaseException {
         try {
@@ -140,7 +181,14 @@ public class VideogameMongoDAO implements VideogameDAO {
             throw new DatabaseException("error al obtener videojuego con id ", e);
         }
     }
-
+    /**
+     *
+     * @param object update object by ID in BD.<br>
+     *               if not exist, just insert
+     * @throws DatabaseException
+     * @throws NotFoundException
+     * @throws DuplicatedException
+     */
     @Override
     public void update(Videogame object) throws DatabaseException, NotFoundException, DuplicatedException {
         LOGGER.debug("Buscando videogame:");
@@ -163,6 +211,12 @@ public class VideogameMongoDAO implements VideogameDAO {
 
     }
 
+    /**
+     *
+     * @param name Filter by name.
+     * @return Videogame List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Videogame> getByName(String name) throws DatabaseException {
         LOGGER.debug("Buscando todos los videojuegos de nombre: " + name);
@@ -182,6 +236,12 @@ public class VideogameMongoDAO implements VideogameDAO {
         return videogames;
     }
 
+    /**
+     *
+     * @param platform Filter by platform.
+     * @return Videogame List
+     * @throws DatabaseException
+     */
     @Override
     public Collection<Videogame> getByPlatform(Platform platform) throws DatabaseException {
         LOGGER.debug("Buscando todos los videojuegos de nombre: " + platform.toString());

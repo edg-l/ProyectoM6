@@ -1,6 +1,7 @@
 package com.github;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 
 import com.github.db.ConexioJDBC;
@@ -49,6 +50,12 @@ public class ConnectionViewController {
     private final ToggleGroup group = new ToggleGroup();
     private String selectedBBDD = "";
 
+    /**
+     * Set FieldText text's to default connection settings<br>
+     * Save the radioButton selection<br>
+     * Limit FieldText of Port to 4 and numeric string<br>
+     * Control of button login to launch next View<br>
+     */
     public void initialize() {
 
         radioSQL.setToggleGroup(group);
@@ -140,6 +147,9 @@ public class ConnectionViewController {
         });
     }
 
+    /**
+     * Just launch view window "Client List"
+     */
     private void clientListWindow() {
 
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ClientListView" + ".fxml"));
