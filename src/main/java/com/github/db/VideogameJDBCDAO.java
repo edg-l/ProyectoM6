@@ -1,7 +1,5 @@
 package com.github.db;
 
-import com.github.Platform;
-import com.github.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
@@ -142,11 +140,6 @@ public class VideogameJDBCDAO implements VideogameDAO {
         }
     }
 
-    /**
-     * Obtener videogames que tenga el client id.
-     * Metodo especifico para JDBC.
-     * @param clientID
-     */
     public Collection<Videogame> getByClientID(int clientID) throws DatabaseException {
         LOGGER.debug("Buscando videogames por client id: " + clientID);
 

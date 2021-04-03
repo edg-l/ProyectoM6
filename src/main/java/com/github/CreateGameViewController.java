@@ -1,16 +1,12 @@
 package com.github;
 
+import com.github.db.Platform;
+import com.github.db.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import org.apache.log4j.Logger;
-
-import java.io.IOException;
-import java.sql.Date;
 
 /**
  * @author Kevin Fernandez

@@ -1,7 +1,5 @@
 package com.github.db;
 
-import com.github.Client;
-import com.github.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;

@@ -1,8 +1,5 @@
 package com.github.db;
 
-import com.github.Client;
-import com.github.Platform;
-import com.github.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
@@ -14,12 +11,8 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.log4j.Logger;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,12 +34,7 @@ public class ClientMongoDAO implements ClientDAO {
         this.collection = database.getCollection("clients");
         this.videogameMongoDAO = videogameMongoDAO;
     }
-    /**
-     *
-     * @param cli Object Client to BD insertion
-     * @throws DatabaseException
-     * @throws DuplicatedException
-     */
+
     @Override
     public void insert(Client cli) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + cli.getName());
@@ -77,12 +65,9 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     /**
-     *
      * @param cli Client Object to document
      * @return Client Object
-     * @throws NotFoundException
      */
-
     private Document clientToDocument(Client cli) {
 
         ArrayList<Document> videogamesList = new ArrayList<Document>();
@@ -108,12 +93,9 @@ public class ClientMongoDAO implements ClientDAO {
     }
 
     /**
-     *
      * @param cli document to Object Client
      * @return Client Object
-     * @throws NotFoundException
      */
-
     private Client documentToClient(Document cli) throws NotFoundException, DatabaseException {
 
         int id = cli.getInteger("id");
@@ -149,14 +131,6 @@ public class ClientMongoDAO implements ClientDAO {
         return newClient;
     }
 
-    /**
-     *
-     * @param id get client By id
-     * @return Client object
-     * @throws DatabaseException
-     * @throws NotFoundException
-     */
-
     @Override
     public Client getByID(Integer id) throws NotFoundException, DatabaseException {
         LOGGER.debug("Buscando cliente por id: " + id);
@@ -178,12 +152,6 @@ public class ClientMongoDAO implements ClientDAO {
         return client;
     }
 
-    /**
-     *
-     * Return collection of every Client in BD
-     * @return Client List
-     * @throws DatabaseException
-     */
     @Override
     public Collection<Client> getAll() throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes");
@@ -202,12 +170,7 @@ public class ClientMongoDAO implements ClientDAO {
         clients.sort(Client::compareTo);
         return clients;
     }
-    /**
-     * Delete Client by ID
-     * @param id La id del objeto
-     * @throws NotFoundException
-     * @throws DatabaseException
-     */
+
     @Override
     public void delete(Integer id) throws NotFoundException, DatabaseException {
         try {
@@ -232,14 +195,7 @@ public class ClientMongoDAO implements ClientDAO {
         }
     }
 
-    /**
-     *
-     * @param object update object by ID in BD.<br>
-     *               if not exist, just insert
-     * @throws DatabaseException
-     * @throws NotFoundException
-     * @throws DuplicatedException
-     */
+
     @Override
     public void update(Client object) throws DatabaseException, NotFoundException {
         LOGGER.debug("Buscando cliente:");
@@ -256,12 +212,7 @@ public class ClientMongoDAO implements ClientDAO {
         }
         LOGGER.debug("Update cliente:");
     }
-    /**
-     *
-     * @param nameQuery Filter by name.
-     * @return Client List
-     * @throws DatabaseException
-     */
+
     @Override
     public Collection<Client> searchByName(String nameQuery) throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes de nombre: " + nameQuery);
@@ -281,12 +232,7 @@ public class ClientMongoDAO implements ClientDAO {
         return clients;
     }
 
-    /**
-     *
-     * @param country Filter by country.
-     * @return Client List
-     * @throws DatabaseException
-     */
+
     @Override
     public Collection<Client> getByCountry(String country) throws DatabaseException {
         LOGGER.debug("Buscando todos los clientes de país: " + country);

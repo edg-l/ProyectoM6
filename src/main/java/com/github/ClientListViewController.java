@@ -1,9 +1,8 @@
 package com.github;
 
+import com.github.db.Client;
 import com.github.exceptions.DatabaseException;
-import javafx.collections.ArrayChangeListener;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

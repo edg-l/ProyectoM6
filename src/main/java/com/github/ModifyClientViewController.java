@@ -1,5 +1,8 @@
 package com.github;
 
+import com.github.db.Client;
+import com.github.db.Platform;
+import com.github.db.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
@@ -13,7 +16,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;

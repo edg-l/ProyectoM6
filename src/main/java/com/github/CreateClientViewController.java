@@ -1,21 +1,15 @@
 package com.github;
 
+import com.github.db.Client;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
-import java.io.IOException;
 import java.sql.Date;
-import java.util.ArrayList;
 
 /**
  * @author Kevin Fernandez

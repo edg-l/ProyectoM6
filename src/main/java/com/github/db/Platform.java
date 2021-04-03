@@ -1,4 +1,4 @@
-package com.github;
+package com.github.db;
 
 /**
  * Posibles plataformas para los videojuegos.

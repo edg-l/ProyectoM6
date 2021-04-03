@@ -1,8 +1,5 @@
 package com.github.db;
 
-import com.github.Client;
-import com.github.Platform;
-import com.github.Videogame;
 import com.github.exceptions.DatabaseException;
 import com.github.exceptions.DuplicatedException;
 import com.github.exceptions.NotFoundException;
@@ -14,7 +11,6 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.log4j.Logger;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -23,6 +19,7 @@ import java.util.List;
 
 /**
  * La implementacion del videogame DAO para mongo.
+ *
  * @author Kevin Fernandez
  */
 public class VideogameMongoDAO implements VideogameDAO {
@@ -36,12 +33,6 @@ public class VideogameMongoDAO implements VideogameDAO {
     }
 
 
-    /**
-     *
-     * @param vi Object Videogame to BD insertion
-     * @throws DatabaseException
-     * @throws DuplicatedException
-     */
     @Override
     public void insert(Videogame vi) throws DatabaseException, DuplicatedException {
         LOGGER.debug("Insertando cliente: " + vi.getName());
@@ -55,13 +46,6 @@ public class VideogameMongoDAO implements VideogameDAO {
         }
     }
 
-    /**
-     *
-     * @param vi Videogame Object to document
-     * @return Videogame Object
-     * @throws NotFoundException
-     */
-
     public Document gameToDocument(Videogame vi) {
 
         Document newVi = new Document("id", vi.getId())
@@ -73,13 +57,6 @@ public class VideogameMongoDAO implements VideogameDAO {
         return newVi;
     }
 
-    /**
-     *
-     * @param vi document to Object Videogame
-     * @return Videogame Object
-     * @throws NotFoundException
-     */
-
     private Videogame documentToGame(Document vi) throws NotFoundException {
 
         int id = vi.getInteger("id");
@@ -88,18 +65,11 @@ public class VideogameMongoDAO implements VideogameDAO {
         Date releaseDate = new java.sql.Date(vi.getDate("releaseDate").getTime());
         int price = vi.getInteger("price");
 
-        Videogame newVi = new Videogame(id,name,platform,releaseDate,price);
+        Videogame newVi = new Videogame(id, name, platform, releaseDate, price);
 
         return newVi;
     }
 
-    /**
-     *
-     * @param id get videogame By id
-     * @return Videogame object
-     * @throws DatabaseException
-     * @throws NotFoundException
-     */
     @Override
     public Videogame getByID(Integer id) throws NotFoundException, DatabaseException {
 
@@ -126,12 +96,6 @@ public class VideogameMongoDAO implements VideogameDAO {
         return newVi;
     }
 
-    /**
-     *
-     * Return collection of every videogame in BD
-     * @return Videogame List
-     * @throws DatabaseException
-     */
     @Override
     public Collection<Videogame> getAll() throws DatabaseException {
 
@@ -152,12 +116,6 @@ public class VideogameMongoDAO implements VideogameDAO {
         return videogames;
     }
 
-    /**
-     * Delete videogame by ID
-     * @param id La id del objeto
-     * @throws NotFoundException
-     * @throws DatabaseException
-     */
     @Override
     public void delete(Integer id) throws NotFoundException, DatabaseException {
         try {
@@ -181,14 +139,7 @@ public class VideogameMongoDAO implements VideogameDAO {
             throw new DatabaseException("error al obtener videojuego con id ", e);
         }
     }
-    /**
-     *
-     * @param object update object by ID in BD.<br>
-     *               if not exist, just insert
-     * @throws DatabaseException
-     * @throws NotFoundException
-     * @throws DuplicatedException
-     */
+
     @Override
     public void update(Videogame object) throws DatabaseException, NotFoundException, DuplicatedException {
         LOGGER.debug("Buscando videogame:");
@@ -211,12 +162,6 @@ public class VideogameMongoDAO implements VideogameDAO {
 
     }
 
-    /**
-     *
-     * @param name Filter by name.
-     * @return Videogame List
-     * @throws DatabaseException
-     */
     @Override
     public Collection<Videogame> getByName(String name) throws DatabaseException {
         LOGGER.debug("Buscando todos los videojuegos de nombre: " + name);
@@ -236,12 +181,6 @@ public class VideogameMongoDAO implements VideogameDAO {
         return videogames;
     }
 
-    /**
-     *
-     * @param platform Filter by platform.
-     * @return Videogame List
-     * @throws DatabaseException
-     */
     @Override
     public Collection<Videogame> getByPlatform(Platform platform) throws DatabaseException {
         LOGGER.debug("Buscando todos los videojuegos de nombre: " + platform.toString());

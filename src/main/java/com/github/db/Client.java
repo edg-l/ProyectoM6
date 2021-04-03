@@ -1,6 +1,5 @@
-package com.github;
+package com.github.db;
 
-import javafx.beans.Observable;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 

@@ -9,4 +9,6 @@ module com.github {
 
     opens com.github to javafx.fxml;
     exports com.github;
+    exports com.github.db;
+    exports com.github.exceptions;
 }
