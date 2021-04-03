@@ -2,6 +2,7 @@ package com.github;
 
 /**
  * Configuracio de la base de datos.
+ * @author Edgar Luque
  */
 public class Configuration {
     private String host;

@@ -95,6 +95,9 @@ public class ClientListViewController {
     }
 
 
+    /**
+     * Recarga la lista de clientes.
+     */
     public void refreshTable() {
         try {
             clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().getAll());
@@ -108,6 +111,10 @@ public class ClientListViewController {
         }
     }
 
+    /**
+     * Recarga la lista de clientes buscando clientes por nombre.
+     * @param name El nombre a buscar.
+     */
     public void refreshTable(String name) {
         try {
             clients = new ArrayList<>(App.gestorPersistencia.getClientDAO().searchByName(name));
@@ -121,6 +128,9 @@ public class ClientListViewController {
         }
     }
 
+    /**
+     * Botón para crear un cliente.
+     */
     @FXML
     private void clickBtnCreateClient() {
 
@@ -130,6 +140,9 @@ public class ClientListViewController {
         }
     }
 
+    /**
+     * Botón para crear un videojuego.
+     */
     @FXML
     private void clickBtnCreateVideoGame() {
 

@@ -51,10 +51,10 @@ public class ConnectionViewController {
     private String selectedBBDD = "";
 
     /**
-     * Set FieldText text's to default connection settings<br>
-     * Save the radioButton selection<br>
-     * Limit FieldText of Port to 4 and numeric string<br>
-     * Control of button login to launch next View<br>
+     * Set FieldText text's to default connection settings
+     * Save the radioButton selection
+     * Limit FieldText of Port to 4 and numeric string
+     * Control of button login to launch next View
      */
     public void initialize() {
 
@@ -148,7 +148,7 @@ public class ConnectionViewController {
     }
 
     /**
-     * Just launch view window "Client List"
+     * Inicia el ClientListView
      */
     private void clientListWindow() {
 

@@ -51,8 +51,7 @@ public class CreateClientViewController {
     private boolean esSoci = false;
 
     /**
-     * Control textID to limit length characters and only numeric<br>
-     *
+     * Control textID to limit length characters and only numeric
      */
     public void initialize() {
         radSi.setToggleGroup(group);
@@ -89,7 +88,7 @@ public class CreateClientViewController {
     }
 
     /**
-     * Call for ClientDAO for add the new client<br>
+     * Call for ClientDAO for add the new client
      * Add feedback information
      */
     @FXML
