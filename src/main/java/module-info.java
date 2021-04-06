@@ -8,6 +8,7 @@ module com.github {
     requires log4j;
 
     opens com.github to javafx.fxml;
+    opens com.github.db to javafx.fxml;
     exports com.github;
     exports com.github.db;
     exports com.github.exceptions;

@@ -1,0 +1,7 @@
+0 [JavaFX Application Thread] DEBUG com.github.App  - Cargando fitxero fxml: ConnectionView
+5773 [JavaFX Application Thread] DEBUG com.github.ConnectionViewController  - Selected - MySQL
+6871 [JavaFX Application Thread] DEBUG com.github.db.ClientJDBCDAO  - Buscando todos los clientes
+6896 [JavaFX Application Thread] DEBUG com.github.db.VideogameJDBCDAO  - Buscando videogames por client id: 1232
+6898 [JavaFX Application Thread] DEBUG com.github.db.VideogameJDBCDAO  - Buscando videogames por client id: 1323
+6900 [JavaFX Application Thread] DEBUG com.github.db.VideogameJDBCDAO  - Buscando videogames por client id: 2312
+6901 [JavaFX Application Thread] DEBUG com.github.db.VideogameJDBCDAO  - Buscando videogames por client id: 2313
